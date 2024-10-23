@@ -1,0 +1,210 @@
+import * as React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as ScreenOrientation from 'expo-screen-orientation';
+
+// Set screen orientation to portrait
+ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
+const Stack = createStackNavigator();
+
+// Home screen (Learn section)
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>LEARN</Text>
+        <View style={styles.headerRight}>
+          <Text>0/1 Lessons Done Today</Text>
+          <Text>10 Day Streak</Text>
+        </View>
+      </View>
+
+      {/* Circles/ Lessons */}
+      <View style={styles.lessonsContainer}>
+        {/* Multiple circles for lessons */}
+        <TouchableOpacity 
+          style={styles.lessonCircle} 
+          onPress={() => navigation.navigate('LessonScreen', { lesson: 'Understanding Your Income' })}
+        >
+          <Text style={styles.lessonText}>Understanding Your Income</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.lessonCircle, styles.inactiveLesson]}>
+          <Text style={styles.lessonText}>Budgeting Basics</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.lessonCircle, styles.inactiveLesson]}>
+          <Text style={styles.lessonText}>Saving Strategies</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.lessonCircle, styles.inactiveLesson]}>
+          <Text style={styles.lessonText}>Investing Fundamentals</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.lessonCircle, styles.inactiveLesson]}>
+          <Text style={styles.lessonText}>Debt Management</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Bottom Navbar */}
+      <View style={styles.navbar}>
+        <Text style={styles.navbarText}>Learn</Text>
+        <Text style={styles.navbarText}>Budget</Text>
+        <Text style={styles.navbarText}>Goals</Text>
+        <Text style={styles.navbarText}>Profile</Text>
+      </View>
+    </View>
+  );
+}
+
+// Lesson screen
+function LessonScreen({ route, navigation }) {
+  const { lesson } = route.params;
+
+  return (
+    <View style={styles.lessonContainer}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
+        <Text style={styles.closeText}>X</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.lessonTitle}>{lesson}</Text>
+      <View style={styles.videoPlaceholder}>
+        <Text>Video about income basics like deductions and tax withholdings</Text>
+      </View>
+
+      <Text style={styles.quizQuestion}>What is the Most Common Type of Income Withholding?</Text>
+
+      <TouchableOpacity style={styles.quizOption}><Text>Federal Income Tax</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.quizOption}><Text>Social Security</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.quizOption}><Text>Insurance Deduction</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.quizOption}><Text>Retirement Deductions</Text></TouchableOpacity>
+
+      <View style={styles.navbar}>
+        <Text style={styles.navbarText}>Learn</Text>
+        <Text style={styles.navbarText}>Budget</Text>
+        <Text style={styles.navbarText}>Goals</Text>
+        <Text style={styles.navbarText}>Profile</Text>
+      </View>
+    </View>
+  );
+}
+
+// Main app function
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="LessonScreen" 
+          component={LessonScreen} 
+          options={{ headerShown: false }} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#013220', // Dark green background
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#000',
+  },
+  headerText: {
+    fontSize: 24,
+    color: '#fff',
+  },
+  headerRight: {
+    alignItems: 'flex-end',
+    color: '#fff',
+  },
+  lessonsContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',  // Evenly spaces circles vertically
+    alignItems: 'center',           // Center circles horizontally
+    paddingVertical: 40,            // Padding to avoid circles touching navbar/header
+  },
+  lessonCircle: {
+    width: 120,        // Smaller width to fit within screen
+    height: 120,       // Same height as width to make a circle
+    borderRadius: 60,  // Half of width/height for a perfect circle
+    backgroundColor: '#b3a1d9', 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inactiveLesson: {
+    backgroundColor: '#d3d3d3',
+  },
+  lessonText: {
+    textAlign: 'center',
+    fontSize: 14,  // Slightly smaller text for better fit in smaller circles
+    color: '#fff',
+  },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 16,
+    backgroundColor: '#000',
+  },
+  navbarText: {
+    color: '#fff',
+  },
+  lessonContainer: {
+    flex: 1,
+    backgroundColor: '#013220', // Dark green background for lesson screen
+    padding: 16,
+    justifyContent: 'space-between',
+  },
+  lessonTitle: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginVertical: 16,
+    color: '#fff',
+  },
+  videoPlaceholder: {
+    width: '100%',
+    height: 200,
+    backgroundColor: '#d3d3d3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  quizQuestion: {
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#fff',
+  },
+  quizOption: {
+    backgroundColor: '#d3d3d3',
+    padding: 16,
+    marginVertical: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    padding: 10,
+  },
+  closeText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+});
