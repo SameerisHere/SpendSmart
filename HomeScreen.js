@@ -97,7 +97,7 @@ function BottomNavbar({ navigation }) {
   return (
     <View style={styles.bottomNav}>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Ionicons name="home-outline" size={24} color="white" />
+        <Ionicons name="book-outline" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
         <Ionicons name="cash-outline" size={24} color="white" />
