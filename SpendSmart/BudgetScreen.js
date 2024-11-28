@@ -77,25 +77,18 @@ export default function BudgetScreen() {
       <Text>Groceries: $400</Text>
       <Text>Dining Out: $200</Text>
       <Text>Other: $400</Text>
+      <Text style={styles.subheader}>RECS BASED ON YOUR BREAKDOWN:</Text>
+      <Text>$200 was spent on unnecessary expenses:</Text>
+      <Text>$200 spent on dining out.</Text>
+      <Text>Spend more on groceries to cut dining costs.</Text>
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-        <Text style={styles.buttonText}>Recommendations & Simulate a Budget</Text>
+        <Text style={styles.buttonText}>Simulate a Budget</Text>
       </TouchableOpacity>
     </View>
   );
 
   const renderRecommendations = () => (
     <View style={styles.container}>
-      <Text style={styles.header}>BUDGET</Text>
-      <Text style={styles.subheader}>SPENDING BREAKDOWN:</Text>
-      <Text>Rent: $1,600</Text>
-      <Text>Car Payments & Insurance: $800</Text>
-      <Text>Groceries: $400</Text>
-      <Text>Dining Out: $200</Text>
-      <Text>Other: $400</Text>
-      <Text style={styles.subheader}>RECS BASED ON YOUR BREAKDOWN:</Text>
-      <Text>$200 was spent on unnecessary expenses:</Text>
-      <Text>$200 spent on dining out.</Text>
-      <Text>Spend more on groceries to cut dining costs.</Text>
       <Text style={styles.subheader}>PROJECT NEXT MONTH’S BUDGET:</Text>
       <TextInput style={styles.input} placeholder="Income" keyboardType="numeric" />
       <TextInput style={styles.input} placeholder="Rent" keyboardType="numeric" />
@@ -176,7 +169,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     marginBottom: 15,
   },
   continueButton: {
@@ -196,8 +189,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   circleText: {
-    color: 'white', // Make the number white
-    fontSize: 16,   // You can adjust the font size as needed
+    color: 'white',
+    fontSize: 16,   
   },
 });
 

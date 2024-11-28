@@ -96,17 +96,21 @@ export default function ProfileScreen({ navigation }) {
 function BottomNavbar({ navigation }) {
   return (
     <View style={styles.bottomNav}>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
         <Ionicons name="book-outline" size={24} color="white" />
+        <Text style={styles.navText}>Learn</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
         <Ionicons name="cash-outline" size={24} color="white" />
+        <Text style={styles.navText}>Budget</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Goals')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
         <Ionicons name="stats-chart-outline" size={24} color="white" />
+        <Text style={styles.navText}>Goals</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
         <Ionicons name="person-circle-outline" size={24} color="white" />
+        <Text style={styles.navText}>Profile</Text>
       </TouchableOpacity>
     </View>
   );
@@ -194,5 +198,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 10,
     backgroundColor: '#000',
+  },
+  navText: {
+    color: 'white',        // White text for visibility
+    fontSize: 12,          // Adjust text size to fit nicely under the icons
+    marginTop: 5,          // Add some space between the icon and the text
+  },
+  navItem: {
+    alignItems: 'center',  // Align items vertically in the center
   },
 });

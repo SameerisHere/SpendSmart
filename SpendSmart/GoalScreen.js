@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function GoalsScreen() {
   const [view, setView] = useState('main'); // Tracks the current view (main, addGoalStep1, addGoalStep2)
@@ -43,11 +44,17 @@ export default function GoalsScreen() {
         <Text style={styles.tip}>Don't forget to save for wants like vacations as well!</Text>
       </View>
     </View>
+    
   );
 
   const renderAddGoalStep1 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>Add a Goal</Text>
+      <View style={styles.steps}>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>1</Text></View>
+        <View style={styles.line}></View>
+        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
@@ -73,6 +80,11 @@ export default function GoalsScreen() {
   const renderAddGoalStep2 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>Add a Goal</Text>
+        <View style={styles.steps}>
+        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
+        <View style={styles.line}></View>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>2</Text></View>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Goal Deadline (MM/DD/YYYY)"
@@ -105,7 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    padding: 20,
+    padding: 10,
   },
   header: {
     fontSize: 24,
@@ -219,5 +231,46 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     flex: 1,
+  },
+  steps: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  line: {
+    width: 30,
+    height: 2,
+    backgroundColor: '#d3d3d3',
+  },
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#797979',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeCircle: {
+    backgroundColor: '#014343',
+  },
+  circleText: {
+    color: 'white',
+    fontSize: 16,   
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: 'black',
+    borderTopWidth: 1,
+  },
+  navText: {
+    color: 'white',        // White text for visibility
+    fontSize: 12,          // Adjust text size to fit nicely under the icons
+    marginTop: 5,          // Add some space between the icon and the text
+  },
+  navItem: {
+    alignItems: 'center',  // Align items vertically in the center
   },
 });
