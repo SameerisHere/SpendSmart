@@ -12,9 +12,9 @@ const ProfileScreen = () => {
       <Text style={styles.header}>PROFILE</Text>
       
       {/* Input Fields */}
-      <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#d3d3d3" />
-      <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#d3d3d3" keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#d3d3d3" secureTextEntry={true} />
+      <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#6C6C6C" />
+      <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#6C6C6C" keyboardType="email-address" />
+      <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#6C6C6C" secureTextEntry={true} />
       
       {/* Save Changes Button */}
       <TouchableOpacity style={styles.saveButton}>
@@ -48,24 +48,25 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003333',
+    backgroundColor: 'white',
     padding: 20,
     justifyContent: 'center',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     marginBottom: 20,
   },
   input: {
-    backgroundColor: '#789b9b',
+    backgroundColor: '#white',
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'white',
     marginBottom: 15,
   },
   saveButton: {
@@ -85,9 +86,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logoutButtonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
-    borderColor: 'white',
+    borderColor: 'black',
     borderWidth: 1,
     paddingVertical: 8,
     paddingHorizontal: 30,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#002222',
+    backgroundColor: 'black',
     paddingVertical: 10,
     position: 'absolute',
     bottom: 0,

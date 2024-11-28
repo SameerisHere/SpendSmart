@@ -33,7 +33,7 @@ export default function ProfileScreen({ navigation }) {
         <TouchableOpacity 
           style={styles.lessonCircle} 
           onPress={() => handleLessonSelect('Understanding Your Income')}>
-          <Text style={styles.lessonText}>Understanding Your Income</Text>
+          <Text style={styles.activeLessonText}>Understanding Your Income</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.lessonCircle, styles.inactiveLesson]}>
@@ -116,23 +116,23 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003333',
+    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
   headerText: {
     fontSize: 24,
-    color: '#fff',
+    color: '#000',
   },
   headerRight: {
     alignItems: 'flex-end',
   },
   headerRightText: {
-    color: '#fff',
+    color: '#000',
   },
   lessonsContainer: {
     flex: 1,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#b3a1d9',
+    backgroundColor: '#2276F0',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -154,18 +154,23 @@ const styles = StyleSheet.create({
   lessonText: {
     textAlign: 'center',
     fontSize: 14,
+    color: '#000',
+  },
+  activeLessonText: {
+    textAlign: 'center',
+    fontSize: 14,
     color: '#fff',
   },
   lessonContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#003333',
+    backgroundColor: '#ffffff',
   },
   lessonTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
-    color: '#fff',
+    color: '#000000',
   },
   videoPlayer: {
     height: 200,
@@ -174,11 +179,13 @@ const styles = StyleSheet.create({
   quizQuestion: {
     fontSize: 18,
     marginVertical: 20,
-    color: '#fff',
+    color: '#000000',
   },
   quizOption: {
     padding: 15,
-    backgroundColor: '#b3a1d9',
+    backgroundColor: '#ffffff',
+    borderColor: '#000000',
+    borderWidth: 2,   
     borderRadius: 10,
     marginVertical: 5,
   },

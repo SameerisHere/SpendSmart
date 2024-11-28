@@ -61,9 +61,6 @@ export default function GoalsScreen() {
         onChangeText={setGoalAmount}
         keyboardType="numeric"
       />
-      <TouchableOpacity style={styles.linkAccount}>
-        <Text style={styles.linkAccountText}>Link a Financial Account +</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={styles.continueButton} onPress={() => setView('addGoalStep2')}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
@@ -107,13 +104,13 @@ export default function GoalsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003333',
+    backgroundColor: '#ffffff',
     padding: 20,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -145,8 +142,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   addButton: {
-    backgroundColor: '#007777',
+    backgroundColor: '#ffffff',
     borderRadius: 25,
+    borderColor: '#000000',
+    borderWidth: 2,
     width: 50,
     height: 50,
     justifyContent: 'center',
@@ -155,11 +154,12 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     fontSize: 24,
-    color: 'white',
+    color: 'black',
   },
   tipsHeader: {
     fontSize: 18,
-    color: 'white',
+    color: 'black',
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   tipsContainer: {
@@ -168,16 +168,20 @@ const styles = StyleSheet.create({
   },
   tip: {
     width: '30%',
-    backgroundColor: '#004c4c',
+    backgroundColor: '#white',
     padding: 10,
     borderRadius: 10,
-    color: 'white',
+    borderColor: 'black',
+    borderWidth: 2,
+    color: 'black',
     textAlign: 'center',
     fontSize: 12,
   },
   input: {
-    backgroundColor: '#789b9b',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
@@ -196,14 +200,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  linkAccount: {
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  linkAccountText: {
-    color: '#b3a1d9',
-    textDecorationLine: 'underline',
-  },
   closeButton: {
     position: 'absolute',
     top: 10,
@@ -220,7 +216,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   switchLabel: {
-    color: 'white',
+    color: 'black',
     fontSize: 14,
     flex: 1,
   },

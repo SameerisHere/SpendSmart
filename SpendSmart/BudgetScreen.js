@@ -4,15 +4,16 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 export default function BudgetScreen() {
   const [step, setStep] = useState(1);
 
+  
   const renderStep1 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>BUDGET</Text>
       <View style={styles.steps}>
-        <View style={[styles.circle, styles.activeCircle]}><Text>1</Text></View>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>1</Text></View>
         <View style={styles.line}></View>
-        <View style={styles.circle}><Text>2</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
         <View style={styles.line}></View>
-        <View style={styles.circle}><Text>3</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>3</Text></View>
       </View>
       <Text style={styles.subheader}>Income and Savings:</Text>
       <TextInput style={styles.input} placeholder="What was this month's post tax income?" keyboardType="numeric" />
@@ -27,11 +28,11 @@ export default function BudgetScreen() {
     <View style={styles.container}>
       <Text style={styles.header}>BUDGET</Text>
       <View style={styles.steps}>
-        <View style={styles.circle}><Text>1</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
         <View style={[styles.line, styles.activeLine]}></View>
-        <View style={[styles.circle, styles.activeCircle]}><Text>2</Text></View>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>2</Text></View>
         <View style={styles.line}></View>
-        <View style={styles.circle}><Text>3</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>3</Text></View>
       </View>
       <Text style={styles.subheader}>Expenses:</Text>
       <TextInput style={styles.input} placeholder="What was this month’s total spent on rent?" keyboardType="numeric" />
@@ -47,14 +48,14 @@ export default function BudgetScreen() {
     <View style={styles.container}>
       <Text style={styles.header}>BUDGET</Text>
       <View style={styles.steps}>
-        <View style={styles.circle}><Text>1</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
         <View style={[styles.line, styles.activeLine]}></View>
-        <View style={styles.circle}><Text>2</Text></View>
+        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
         <View style={[styles.line, styles.activeLine]}></View>
-        <View style={[styles.circle, styles.activeCircle]}><Text>3</Text></View>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>3</Text></View>
       </View>
       <Text style={styles.subheader}>Other Spending:</Text>
-      <TextInput style={styles.input} placeholder="What was this month’s total spent on other categories?" keyboardType="numeric" />
+      <TextInput style={styles.input} placeholder="This month’s total spent on other categories?" keyboardType="numeric" />
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
         <Text style={styles.buttonText}>Create Budget</Text>
       </TouchableOpacity>
@@ -77,7 +78,7 @@ export default function BudgetScreen() {
       <Text>Dining Out: $200</Text>
       <Text>Other: $400</Text>
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-        <Text style={styles.buttonText}>Recs & Simulate!</Text>
+        <Text style={styles.buttonText}>Recommendations & Simulate a Budget</Text>
       </TouchableOpacity>
     </View>
   );
@@ -127,13 +128,13 @@ export default function BudgetScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003333',
+    backgroundColor: '#ffffff',
     padding: 20,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -147,12 +148,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#797979',
     justifyContent: 'center',
     alignItems: 'center',
   },
   activeCircle: {
-    backgroundColor: '#b3a1d9',
+    backgroundColor: '#014343',
   },
   line: {
     width: 30,
@@ -164,12 +165,14 @@ const styles = StyleSheet.create({
   },
   subheader: {
     fontSize: 18,
-    color: 'white',
+    color: 'black',
     marginBottom: 10,
   },
   input: {
-    backgroundColor: '#789b9b',
+    backgroundColor: '#white',
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
@@ -191,6 +194,10 @@ const styles = StyleSheet.create({
   circleContainer: {
     alignItems: 'center',
     marginBottom: 20,
+  },
+  circleText: {
+    color: 'white', // Make the number white
+    fontSize: 16,   // You can adjust the font size as needed
   },
 });
 
