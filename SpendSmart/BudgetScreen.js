@@ -38,9 +38,14 @@ export default function BudgetScreen() {
       <TextInput style={styles.input} placeholder="What was this month’s total spent on rent?" keyboardType="numeric" />
       <TextInput style={styles.input} placeholder="What was this month’s total spent on groceries?" keyboardType="numeric" />
       <TextInput style={styles.input} placeholder="What was this month’s total spent on dining out?" keyboardType="numeric" />
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(3)}>
+      <View style={styles.buttonRow}>
+      <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.continueAndBackButton} onPress={() => setStep(3)}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 
@@ -56,9 +61,14 @@ export default function BudgetScreen() {
       </View>
       <Text style={styles.subheader}>Other Spending:</Text>
       <TextInput style={styles.input} placeholder="This month’s total spent on other categories?" keyboardType="numeric" />
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
+      <View style={styles.buttonRow}>
+      <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.continueAndBackButton} onPress={() => setStep(4)}>
         <Text style={styles.buttonText}>Create Budget</Text>
       </TouchableOpacity>
+    </View>
     </View>
   );
 
@@ -83,6 +93,9 @@ export default function BudgetScreen() {
       <Text>Spend more on groceries to cut dining costs.</Text>
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
         <Text style={styles.buttonText}>Simulate a Budget</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+        <Text style={styles.buttonText}>Create New Budget</Text>
       </TouchableOpacity>
     </View>
   );
@@ -191,6 +204,32 @@ const styles = StyleSheet.create({
   circleText: {
     color: 'white',
     fontSize: 16,   
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  backButton: {
+    backgroundColor: '#BF0B0B',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    flex: 1,
+    marginRight: 10,
+  },
+  continueAndBackButton: {
+    backgroundColor: '#005e5e',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    flex: 1,
+    marginLeft: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

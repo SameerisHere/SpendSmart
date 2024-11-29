@@ -68,12 +68,14 @@ export default function GoalsScreen() {
         onChangeText={setGoalAmount}
         keyboardType="numeric"
       />
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.cancelButton} onPress={() => setView('main')}>
+        <Text style={styles.buttonText}>Cancel</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.continueButton} onPress={() => setView('addGoalStep2')}>
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setView('main')} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>×</Text>
-      </TouchableOpacity>
+    </View>
     </View>
   );
 
@@ -98,12 +100,14 @@ export default function GoalsScreen() {
           onValueChange={setAutomaticAdjust}
         />
       </View>
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.cancelButton} onPress={() => setView('addGoalStep1')}>
+        <Text style={styles.buttonText}>Back</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.continueButton} onPress={addNewGoal}>
         <Text style={styles.buttonText}>Start Saving!</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setView('main')} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>×</Text>
-      </TouchableOpacity>
+    </View>
     </View>
   );
 
@@ -197,15 +201,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     marginBottom: 15,
   },
   continueButton: {
     backgroundColor: '#005e5e',
     paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
   },
   buttonText: {
     color: 'white',
@@ -266,11 +270,28 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   navText: {
-    color: 'white',        // White text for visibility
-    fontSize: 12,          // Adjust text size to fit nicely under the icons
-    marginTop: 5,          // Add some space between the icon and the text
+    color: 'white',
+    fontSize: 12,          
+    marginTop: 5,          
   },
   navItem: {
-    alignItems: 'center',  // Align items vertically in the center
+    alignItems: 'center',  
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: '#BF0B0B',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
