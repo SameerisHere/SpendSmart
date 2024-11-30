@@ -83,9 +83,10 @@ export default function ProfileScreen({ navigation }) {
       <TouchableOpacity style={styles.quizOption} onPress={() => handleQuizOptionPress('Retirement Deductions')}>
         <Text>Retirement Deductions</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.continueButton} onPress={() => setSelectedLesson('')}>
+        <Text style={styles.buttonText}>Back to Lessons</Text>
+      </TouchableOpacity>
 
-      {/* Bottom Navbar */}
-      <BottomNavbar navigation={navigation} />
     </View>
   );
 
@@ -206,5 +207,17 @@ const styles = StyleSheet.create({
   },
   navItem: {
     alignItems: 'center',  // Align items vertically in the center
+  },
+  continueButton: {
+    backgroundColor: '#005e5e',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
