@@ -1,9 +1,47 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-export default function BudgetScreen() {
-  const [step, setStep] = useState(1);
+  export default function BudgetScreen() {
+    const [view, setView] = useState('main');
+    const [goalName, setGoalName] = useState('');
+    const [goalAmount, setGoalAmount] = useState('');
+    const [goalDeadline, setGoalDeadline] = useState('');
+    const [step, setStep] = useState(0);
+    const [goals, setGoals] = useState([
+      { name: 'October', spent: 3500, saved: 500 },
+      { name: 'November', spent: 3800, saved: 200 },
+    ]);
 
+    const addNewGoal = () => {
+      setGoals([...goals, { name: goalName, spent: 0, saved: 0 }]);
+      setGoalName('');
+      setGoalAmount('');
+      setGoalDeadline('');
+      setView('main');
+    };
+
+      const renderMainView = () => (
+        <View style={styles.container}>
+          <Text style={styles.header}>BUDGET</Text>
+          <View style={styles.goalsContainer}>
+            {goals.map((goal, index) => (
+              <View key={index} style={styles.goalCard}>
+                <Text style={styles.goalTitle}>{goal.name}</Text>
+                <Text style={styles.goalAmount}>
+                  Spent: ${goal.spent} / Saved: ${goal.saved}
+                </Text>
+              </View>
+            ))}
+            <TouchableOpacity style={styles.addButton} onPress={() => setStep('Step1')}>
+              <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.tipsHeader}>Tips</Text>
+          <View style={styles.tipsContainer}>
+            <Text style={styles.tip}>Prioritize needs like rent and groceries over wants</Text>
+          </View>
+        </View>
+      );
   
   const renderStep1 = () => (
     <View style={styles.container}>
@@ -97,6 +135,9 @@ export default function BudgetScreen() {
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
         <Text style={styles.buttonText}>Create New Budget</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+        <Text style={styles.buttonText}>Back to All Budgets</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -109,13 +150,15 @@ export default function BudgetScreen() {
       <TextInput style={styles.input} placeholder="Groceries" keyboardType="numeric" />
       <TextInput style={styles.input} placeholder="Dining Out" keyboardType="numeric" />
       <TextInput style={styles.input} placeholder="Other" keyboardType="numeric" />
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(0)}>
         <Text style={styles.buttonText}>Finish Simulation</Text>
       </TouchableOpacity>
     </View>
   );
 
   switch (step) {
+    case 0:
+      return renderMainView();
     case 1:
       return renderStep1();
     case 2:
@@ -192,6 +235,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+  smallerContinueButton: {
+    backgroundColor: '#BF0B0B',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
   buttonText: {
     color: 'white',
     fontSize: 16,
@@ -230,6 +280,69 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  goalsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+  },
+  goalCard: {
+    width: 150,
+    backgroundColor: '#006b6b',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+  goalTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  goalProgress: {
+    fontSize: 14,
+    color: 'white',
+    marginVertical: 5,
+  },
+  goalAmount: {
+    fontSize: 12,
+    color: 'white',
+  },
+  addButton: {
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    borderColor: '#000000',
+    borderWidth: 2,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  addButtonText: {
+    fontSize: 24,
+    color: 'black',
+  },
+  tipsHeader: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  tipsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tip: {
+    width: '30%',
+    backgroundColor: '#white',
+    padding: 10,
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 12,
   },
 });
 
