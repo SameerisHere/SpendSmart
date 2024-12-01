@@ -14,8 +14,22 @@ export default function ProfileScreen({ navigation }) {
     updatedLessons[lessonIndex] = true;
     setCompletedLessons(updatedLessons);
     setCurrentLessonIndex(lessonIndex + 1); // Move to the next lesson after completion
-    Alert.alert("Correct!", "You have completed this lesson!");
-  };
+
+    // Show alert and navigate back to the home screen after "OK" is pressed
+    Alert.alert(
+        "Correct!",
+        "You have completed this lesson!",
+        [
+            {
+                text: "OK", 
+                onPress: () => {
+                    setSelectedLesson(null); // This will set the screen to home (reset selected lesson)
+                    navigation.navigate('Home'); // Navigate back to the Home screen
+                }
+            }
+        ]
+    );
+};
 
   const handleLessonSelect = (lesson, lessonIndex) => {
     setSelectedLesson(lesson);
