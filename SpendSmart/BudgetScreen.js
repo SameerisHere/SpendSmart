@@ -43,72 +43,183 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
         </View>
       );
   
-  const renderStep1 = () => (
-    <View style={styles.container}>
-      <Text style={styles.header}>BUDGET</Text>
-      <View style={styles.steps}>
-        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>1</Text></View>
-        <View style={styles.line}></View>
-        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
-        <View style={styles.line}></View>
-        <View style={styles.circle}><Text style={styles.circleText}>3</Text></View>
-      </View>
-      <Text style={styles.subheader}>Income and Savings:</Text>
-      <TextInput style={styles.input} placeholder="What was this month's post tax income?" keyboardType="numeric" />
-      <TextInput style={styles.input} placeholder="How much was saved this month?" keyboardType="numeric" />
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(2)}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
-  );
+      const [income, setIncome] = useState('');
+      const [savings, setSavings] = useState('');
+      
+      const validateStep1 = () => {
+        if (!income || Number(income) <= 0 || !savings || Number(savings) <= 0) {
+          Alert.alert('Validation Error', 'Please enter values greater than 0 for both fields.');
+          return false;
+        }
+        return true;
+      };
+      
+      const handleStep1Continue = () => {
+        if (validateStep1()) {
+          setStep(2);
+        }
+      };
+      
+      const renderStep1 = () => (
+        <View style={styles.container}>
+          <Text style={styles.header}>BUDGET</Text>
+          <View style={styles.steps}>
+            <View style={[styles.circle, styles.activeCircle]}>
+              <Text style={styles.circleText}>1</Text>
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>2</Text>
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>3</Text>
+            </View>
+          </View>
+          <Text style={styles.subheader}>Income and Savings:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="What was this month's post-tax income?"
+            keyboardType="numeric"
+            value={income}
+            onChangeText={setIncome}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="How much was saved this month?"
+            keyboardType="numeric"
+            value={savings}
+            onChangeText={setSavings}
+          />
+          <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
+            <Text style={styles.buttonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+      );
+      
 
-  const renderStep2 = () => (
-    <View style={styles.container}>
-      <Text style={styles.header}>BUDGET</Text>
-      <View style={styles.steps}>
-        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
-        <View style={[styles.line, styles.activeLine]}></View>
-        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>2</Text></View>
-        <View style={styles.line}></View>
-        <View style={styles.circle}><Text style={styles.circleText}>3</Text></View>
-      </View>
-      <Text style={styles.subheader}>Expenses:</Text>
-      <TextInput style={styles.input} placeholder="What was this month’s total spent on rent?" keyboardType="numeric" />
-      <TextInput style={styles.input} placeholder="What was this month’s total spent on groceries?" keyboardType="numeric" />
-      <TextInput style={styles.input} placeholder="What was this month’s total spent on dining out?" keyboardType="numeric" />
-      <View style={styles.buttonRow}>
-      <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueAndBackButton} onPress={() => setStep(3)}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
-    </View>
-  );
+      const [rent, setRent] = useState('');
+      const [groceries, setGroceries] = useState('');
+      const [diningOut, setDiningOut] = useState('');
+      
+      const validateStep2 = () => {
+        if (
+          !rent || Number(rent) <= 0 ||
+          !groceries || Number(groceries) <= 0 ||
+          !diningOut || Number(diningOut) <= 0
+        ) {
+          Alert.alert('Validation Error', 'Please enter values greater than 0 for all fields.');
+          return false;
+        }
+        return true;
+      };
+      
+      const handleStep2Continue = () => {
+        if (validateStep2()) {
+          setStep(3);
+        }
+      };
+      
+      const renderStep2 = () => (
+        <View style={styles.container}>
+          <Text style={styles.header}>BUDGET</Text>
+          <View style={styles.steps}>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>1</Text>
+            </View>
+            <View style={[styles.line, styles.activeLine]}></View>
+            <View style={[styles.circle, styles.activeCircle]}>
+              <Text style={styles.circleText}>2</Text>
+            </View>
+            <View style={styles.line}></View>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>3</Text>
+            </View>
+          </View>
+          <Text style={styles.subheader}>Expenses:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="What was this month’s total spent on rent?"
+            keyboardType="numeric"
+            value={rent}
+            onChangeText={setRent}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="What was this month’s total spent on groceries?"
+            keyboardType="numeric"
+            value={groceries}
+            onChangeText={setGroceries}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="What was this month’s total spent on dining out?"
+            keyboardType="numeric"
+            value={diningOut}
+            onChangeText={setDiningOut}
+          />
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep2Continue}>
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+      
 
-  const renderStep3 = () => (
-    <View style={styles.container}>
-      <Text style={styles.header}>BUDGET</Text>
-      <View style={styles.steps}>
-        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
-        <View style={[styles.line, styles.activeLine]}></View>
-        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
-        <View style={[styles.line, styles.activeLine]}></View>
-        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>3</Text></View>
-      </View>
-      <Text style={styles.subheader}>Other Spending:</Text>
-      <TextInput style={styles.input} placeholder="This month’s total spent on other categories?" keyboardType="numeric" />
-      <View style={styles.buttonRow}>
-      <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueAndBackButton} onPress={() => setStep(4)}>
-        <Text style={styles.buttonText}>Create Budget</Text>
-      </TouchableOpacity>
-    </View>
-    </View>
-  );
+      const [otherSpending, setOtherSpending] = useState('');
+
+      const validateStep3 = () => {
+        if (!otherSpending || Number(otherSpending) <= 0) {
+          Alert.alert('Validation Error', 'Please enter a value greater than 0 for other spending.');
+          return false;
+        }
+        return true;
+      };
+      
+      const handleStep3Continue = () => {
+        if (validateStep3()) {
+          setStep(4); // Navigate to Step 4 (Spending Habits)
+        }
+      };
+      
+      const renderStep3 = () => (
+        <View style={styles.container}>
+          <Text style={styles.header}>BUDGET</Text>
+          <View style={styles.steps}>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>1</Text>
+            </View>
+            <View style={[styles.line, styles.activeLine]}></View>
+            <View style={styles.circle}>
+              <Text style={styles.circleText}>2</Text>
+            </View>
+            <View style={[styles.line, styles.activeLine]}></View>
+            <View style={[styles.circle, styles.activeCircle]}>
+              <Text style={styles.circleText}>3</Text>
+            </View>
+          </View>
+          <Text style={styles.subheader}>Other Spending:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="This month’s total spent on other categories?"
+            keyboardType="numeric"
+            value={otherSpending}
+            onChangeText={setOtherSpending}
+          />
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep3Continue}>
+              <Text style={styles.buttonText}>Create Budget</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );      
 
   const renderSpendingHabits = () => (
     <View style={styles.container}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function GoalsScreen() {
@@ -20,6 +20,43 @@ export default function GoalsScreen() {
     setGoalDeadline('');
     setAutomaticAdjust(false);
     setView('main');
+  };
+
+  const validateStep1 = () => {
+    if (!goalName.trim()) {
+      Alert.alert('Validation Error', 'Please enter a name for your goal.');
+      return false;
+    }
+    if (!goalAmount || parseFloat(goalAmount) <= 0) {
+      Alert.alert('Validation Error', 'Please enter a valid goal amount greater than 0.');
+      return false;
+    }
+    return true;
+  };
+
+  const validateStep2 = () => {
+    if (!goalDeadline.trim()) {
+      Alert.alert('Validation Error', 'Please enter a deadline for your goal.');
+      return false;
+    }
+    const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+    if (!dateRegex.test(goalDeadline)) {
+      Alert.alert('Validation Error', 'Please enter the deadline in the format MM/DD/YYYY.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleStep1Continue = () => {
+    if (validateStep1()) {
+      setView('addGoalStep2');
+    }
+  };
+
+  const handleAddNewGoal = () => {
+    if (validateStep2()) {
+      addNewGoal();
+    }
   };
 
   const renderMainView = () => (
@@ -44,7 +81,6 @@ export default function GoalsScreen() {
         <Text style={styles.tip}>Don't forget to save for wants like vacations as well!</Text>
       </View>
     </View>
-    
   );
 
   const renderAddGoalStep1 = () => (
@@ -69,20 +105,20 @@ export default function GoalsScreen() {
         keyboardType="numeric"
       />
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.cancelButton} onPress={() => setView('main')}>
-        <Text style={styles.buttonText}>Cancel</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setView('addGoalStep2')}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setView('main')}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   const renderAddGoalStep2 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>Add a Goal</Text>
-        <View style={styles.steps}>
+      <View style={styles.steps}>
         <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
         <View style={styles.line}></View>
         <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>2</Text></View>
@@ -101,13 +137,13 @@ export default function GoalsScreen() {
         />
       </View>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.cancelButton} onPress={() => setView('addGoalStep1')}>
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={addNewGoal}>
-        <Text style={styles.buttonText}>Start Saving!</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setView('addGoalStep1')}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={handleAddNewGoal}>
+          <Text style={styles.buttonText}>Start Saving!</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
