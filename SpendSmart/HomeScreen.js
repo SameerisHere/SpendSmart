@@ -51,55 +51,61 @@ export default function ProfileScreen({ navigation }) {
   };
 
   // Render the home screen with lesson selection circles
-  const renderHomeScreen = () => (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>LEARN</Text>
-        <View style={styles.headerRight}>
-          <Text style={styles.headerRightText}>0/1 Lessons Done Today</Text>
-          <Text style={styles.headerRightText}>10 Day Streak</Text>
+  const renderHomeScreen = () => {
+    const lessonsCompletedToday = completedLessons.filter((lesson) => lesson).length;
+  
+    return (
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerText}>LEARN</Text>
+          <View style={styles.headerRight}>
+            <Text style={styles.headerRightText}>
+              {lessonsCompletedToday}/1 Lessons Done Today
+            </Text>
+            <Text style={styles.headerRightText}>10 Day Streak</Text>
+          </View>
         </View>
+    
+        {/* Circles/ Lessons */}
+        <View style={styles.lessonsContainer}>
+          <TouchableOpacity 
+            style={[styles.lessonCircle, currentLessonIndex >= 0 ? styles.activeLesson : styles.inactiveLesson]} 
+            onPress={() => handleLessonSelect('Lesson 1: Understanding Your Income', 0)}>
+            <Text style={styles.activeLessonText}>Lesson 1: Understanding Your Income</Text>
+          </TouchableOpacity>
+    
+          <TouchableOpacity 
+            style={[styles.lessonCircle, currentLessonIndex >= 1 ? styles.activeLesson : (completedLessons[0] ? styles.completedLesson : styles.inactiveLesson)]}
+            onPress={() => handleLessonSelect('Lesson 2: Budgeting Basics', 1)}>
+            <Text style={styles.lessonText}>Lesson 2: Budgeting Basics</Text>
+          </TouchableOpacity>
+    
+          <TouchableOpacity 
+            style={[styles.lessonCircle, currentLessonIndex >= 2 ? styles.activeLesson : (completedLessons[1] ? styles.completedLesson : styles.inactiveLesson)]}
+            onPress={() => handleLessonSelect('Lesson 3: Saving Strategies', 2)}>
+            <Text style={styles.lessonText}>Lesson 3: Saving Strategies</Text>
+          </TouchableOpacity>
+    
+          <TouchableOpacity 
+            style={[styles.lessonCircle, currentLessonIndex >= 3 ? styles.activeLesson : (completedLessons[2] ? styles.completedLesson : styles.inactiveLesson)]}
+            onPress={() => handleLessonSelect('Lesson 4: Investing Fundamentals', 3)}>
+            <Text style={styles.lessonText}>Lesson 4: Investing Fundamentals</Text>
+          </TouchableOpacity>
+    
+          <TouchableOpacity 
+            style={[styles.lessonCircle, currentLessonIndex >= 4 ? styles.activeLesson : (completedLessons[3] ? styles.completedLesson : styles.inactiveLesson)]}
+            onPress={() => handleLessonSelect('Lesson 5: Debt Management', 4)}>
+            <Text style={styles.lessonText}>Lesson 5: Debt Management</Text>
+          </TouchableOpacity>
+        </View>
+    
+        {/* Bottom Navbar */}
+        <BottomNavbar navigation={navigation} />
       </View>
+    );
+  };
   
-      {/* Circles/ Lessons */}
-      <View style={styles.lessonsContainer}>
-        <TouchableOpacity 
-          style={[styles.lessonCircle, currentLessonIndex >= 0 ? styles.activeLesson : styles.inactiveLesson]} 
-          onPress={() => handleLessonSelect('Lesson 1: Understanding Your Income', 0)}>
-          <Text style={styles.activeLessonText}>Lesson 1: Understanding Your Income</Text>
-        </TouchableOpacity>
-  
-        <TouchableOpacity 
-          style={[styles.lessonCircle, currentLessonIndex >= 1 ? styles.activeLesson : (completedLessons[0] ? styles.completedLesson : styles.inactiveLesson)]}
-          onPress={() => handleLessonSelect('Lesson 2: Budgeting Basics', 1)}>
-          <Text style={styles.lessonText}>Lesson 2: Budgeting Basics</Text>
-        </TouchableOpacity>
-  
-        <TouchableOpacity 
-          style={[styles.lessonCircle, currentLessonIndex >= 2 ? styles.activeLesson : (completedLessons[1] ? styles.completedLesson : styles.inactiveLesson)]}
-          onPress={() => handleLessonSelect('Lesson 3: Saving Strategies', 2)}>
-          <Text style={styles.lessonText}>Lesson 3: Saving Strategies</Text>
-        </TouchableOpacity>
-  
-        <TouchableOpacity 
-          style={[styles.lessonCircle, currentLessonIndex >= 3 ? styles.activeLesson : (completedLessons[2] ? styles.completedLesson : styles.inactiveLesson)]}
-          onPress={() => handleLessonSelect('Lesson 4: Investing Fundamentals', 3)}>
-          <Text style={styles.lessonText}>Lesson 4: Investing Fundamentals</Text>
-        </TouchableOpacity>
-  
-        <TouchableOpacity 
-          style={[styles.lessonCircle, currentLessonIndex >= 4 ? styles.activeLesson : (completedLessons[3] ? styles.completedLesson : styles.inactiveLesson)]}
-          onPress={() => handleLessonSelect('Lesson 5: Debt Management', 4)}>
-          <Text style={styles.lessonText}>Lesson 5: Debt Management</Text>
-        </TouchableOpacity>
-      </View>
-  
-      {/* Bottom Navbar */}
-      <BottomNavbar navigation={navigation} />
-    </View>
-  );
-
   // Render the lesson content screen when a lesson is selected
   const renderLessonScreen = () => (
     <View style={styles.lessonContainer}>
