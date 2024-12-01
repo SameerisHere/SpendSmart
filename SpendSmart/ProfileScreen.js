@@ -1,26 +1,54 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Validate email format
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Handle Save Changes
+  const handleSaveChanges = () => {
+    if (!validateEmail(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
+      return;
+    }
+    Alert.alert('Success', 'Your changes have been saved!');
+  };
 
   return (
     <View style={styles.container}>
       {/* Profile Header */}
       <Text style={styles.header}>PROFILE</Text>
-      
-      {/* Input Fields */}
-      <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#6C6C6C" />
-      <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#6C6C6C" keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#6C6C6C" secureTextEntry={true} />
-      
+      <TextInput
+        style={styles.input}
+        placeholder="Email Address"
+        placeholderTextColor="#6C6C6C"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        placeholderTextColor="#6C6C6C"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+
       {/* Save Changes Button */}
-      <TouchableOpacity style={styles.saveButton}>
+      <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
-      
+
       {/* Logout Button */}
       <TouchableOpacity style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>Logout</Text>
