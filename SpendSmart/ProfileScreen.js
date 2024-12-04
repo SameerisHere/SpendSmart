@@ -1,54 +1,26 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  // Validate email format
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  // Handle Save Changes
-  const handleSaveChanges = () => {
-    if (!validateEmail(email)) {
-      Alert.alert('Invalid Email', 'Please enter a valid email address.');
-      return;
-    }
-    Alert.alert('Success', 'Your changes have been saved!');
-  };
 
   return (
     <View style={styles.container}>
       {/* Profile Header */}
       <Text style={styles.header}>PROFILE</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email Address"
-        placeholderTextColor="#6C6C6C"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#6C6C6C"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
-
+      
+      {/* Input Fields */}
+      <TextInput style={styles.input} placeholder="Username" placeholderTextColor="#d3d3d3" />
+      <TextInput style={styles.input} placeholder="Email Address" placeholderTextColor="#d3d3d3" keyboardType="email-address" />
+      <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#d3d3d3" secureTextEntry={true} />
+      
       {/* Save Changes Button */}
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+      <TouchableOpacity style={styles.saveButton}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
-
+      
       {/* Logout Button */}
       <TouchableOpacity style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>Logout</Text>
@@ -76,25 +48,24 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#003333',
     padding: 20,
     justifyContent: 'center',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     marginBottom: 20,
   },
   input: {
-    backgroundColor: '#white',
+    backgroundColor: '#789b9b',
     borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
+    color: 'white',
     marginBottom: 15,
   },
   saveButton: {
@@ -114,9 +85,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logoutButtonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 1,
     paddingVertical: 8,
     paddingHorizontal: 30,
@@ -125,7 +96,7 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'black',
+    backgroundColor: '#002222',
     paddingVertical: 10,
     position: 'absolute',
     bottom: 0,
