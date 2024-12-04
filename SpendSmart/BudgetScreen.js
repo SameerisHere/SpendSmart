@@ -301,7 +301,7 @@ const renderSpendingHabits = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#19a482',
+    backgroundColor: '#003333',
     padding: 20,
     color: 'white',
   },

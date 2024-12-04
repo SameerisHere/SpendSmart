@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
 //import LearnScreen from './LearnScreen'; // This is now the renamed LessonScreen file
 import HomeScreen from './HomeScreen';
-import GoalsScreen from './GoalsScreen';
+import GoalScreen from './GoalScreen';
 import ProfileScreen from './ProfileScreen';
 import BudgetScreen from './BudgetScreen'; 
 
@@ -19,13 +19,13 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Goals" component={GoalsScreen} />
+        <Stack.Screen name="Goals" component={GoalScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Budget" component={BudgetScreen} />
         
         <Stack.Screen 
           name="GoalsScreen" 
-          component={GoalsScreen} // Reference the renamed LearnScreen here
+          component={GoalScreen} // Reference the renamed LearnScreen here
           options={{ headerShown: false }} 
         />
         

@@ -169,7 +169,7 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#005e5e',
+    backgroundColor: '#003333',
   },
   header: {
     flexDirection: 'row',
