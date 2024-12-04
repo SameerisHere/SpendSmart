@@ -169,23 +169,23 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#005e5e',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
   },
   headerText: {
     fontSize: 24,
-    color: '#000',
+    color: '#f9fafa',
   },
   headerRight: {
     alignItems: 'flex-end',
   },
   headerRightText: {
-    color: '#000',
+    color: '#f9fafa',
   },
   lessonsContainer: {
     flex: 1,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#999999',
   },
   activeLesson: {
-    backgroundColor: '#005e5e', // Active lesson color (blue-green)
+    backgroundColor: '#07e4b8', // Active lesson color (blue-green)
   },
   lessonText: {
     textAlign: 'center',
