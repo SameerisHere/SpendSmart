@@ -169,7 +169,7 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003333',
+    backgroundColor: '#005e5e',
   },
   header: {
     flexDirection: 'row',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inactiveLesson: {
-    backgroundColor: '#999999',
+    backgroundColor: '#d0d3d4',
   },
   activeLesson: {
     backgroundColor: '#07e4b8', // Active lesson color (blue-green)
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   lessonText: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#fff',
+    color: '#white',
   },
   activeLessonText: {
     textAlign: 'center',
@@ -220,13 +220,13 @@ const styles = StyleSheet.create({
   lessonContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#005e5e',
   },
   lessonTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
-    color: '#000000',
+    color: 'white',
   },
   videoPlayer: {
     height: 200,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   quizQuestion: {
     fontSize: 18,
     marginVertical: 20,
-    color: '#000000',
+    color: 'white',
   },
   quizOption: {
     padding: 15,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',  // Align items vertically in the center
   },
   continueButton: {
-    backgroundColor: '#005e5e',
+    backgroundColor: '#1abc9c',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
