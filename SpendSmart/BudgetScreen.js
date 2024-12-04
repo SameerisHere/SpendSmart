@@ -80,6 +80,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="What was this month's post-tax income?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={income}
             onChangeText={setIncome}
@@ -87,6 +88,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="How much was saved this month?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={savings}
             onChangeText={setSavings}
@@ -140,6 +142,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="What was this month’s spend on rent?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={rent}
             onChangeText={setRent}
@@ -147,6 +150,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="What was this month’s spend on groceries?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={groceries}
             onChangeText={setGroceries}
@@ -154,6 +158,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="What was this month’s spend on dining?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={diningOut}
             onChangeText={setDiningOut}
@@ -206,6 +211,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <TextInput
             style={styles.input}
             placeholder="This month’s total spent on other?"
+            placeholderTextColor="white"
             keyboardType="numeric"
             value={otherSpending}
             onChangeText={setOtherSpending}
@@ -221,46 +227,53 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
         </View>
       );      
 
-  const renderSpendingHabits = () => (
-    <View style={styles.container}>
-      <Text style={styles.header}>BUDGET</Text>
-      <View style={styles.circleContainer}>
-        <Text>MONTHLY INCOME POST-TAX:</Text>
-        <Text>${income}</Text>
-        <Text>SAVED: ${savings}</Text>
-        <Text> SPENT: ${parseFloat(rent) + parseFloat(groceries) + parseFloat(diningOut) + parseFloat(otherSpending)} </Text>
-      </View>
-      <Text style={styles.subheader}>YOUR SPENDING BREAKDOWN:</Text>
-      <Text>Rent: ${rent} </Text>
-      <Text>Groceries: ${groceries}</Text>
-      <Text>Dining Out: ${diningOut}</Text>
-      <Text>Other: ${otherSpending}</Text>
-      <Text style={styles.subheader}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
-      <Text>${parseFloat(diningOut) + parseFloat(otherSpending)} was spent on unnecessary expenses:</Text>
-      <Text>${diningOut} spent on dining out.</Text>
-      <Text>${otherSpending} spent on other.</Text>
-      <Text>Spend more on groceries to cut dining costs.</Text>
-      <Text>Spend less on other unnecessary spending to save more.</Text>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-        <Text style={styles.buttonText}>Simulate a Budget</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
-        <Text style={styles.buttonText}>Create New Budget</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
-        <Text style={styles.buttonText}>Back to All Budgets</Text>
-      </TouchableOpacity>
+const renderSpendingHabits = () => (
+  <View style={styles.container}>
+    <Text style={[styles.header, styles.whiteText]}>BUDGET</Text>
+    <View style={styles.circleContainer}>
+      <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
+      <Text style={styles.whiteText}>${income}</Text>
+      <Text style={styles.whiteText}>SAVED: ${savings}</Text>
+      <Text style={styles.whiteText}>
+        SPENT: ${parseFloat(rent) + parseFloat(groceries) + parseFloat(diningOut) + parseFloat(otherSpending)}
+      </Text>
     </View>
-  );
+    <Text style={[styles.subheader, styles.whiteText]}>YOUR SPENDING BREAKDOWN:</Text>
+    <Text style={styles.whiteText}>Rent: ${rent}</Text>
+    <Text style={styles.whiteText}>Groceries: ${groceries}</Text>
+    <Text style={styles.whiteText}>Dining Out: ${diningOut}</Text>
+    <Text style={styles.whiteText}>Other: ${otherSpending}</Text>
+    <Text style={[styles.subheader, styles.whiteText]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
+    <Text style={styles.whiteText}>
+      ${parseFloat(diningOut) + parseFloat(otherSpending)} was spent on unnecessary expenses:
+    </Text>
+    <Text style={styles.whiteText}>${diningOut} spent on dining out.</Text>
+    <Text style={styles.whiteText}>${otherSpending} spent on other.</Text>
+    <Text style={styles.whiteText}>Spend more on groceries to cut dining costs.</Text>
+    <Text style={styles.whiteText}>Spend less on other unnecessary spending to save more.</Text>
+    <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
+      <Text style={styles.buttonText}>Simulate a Budget</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+      <Text style={styles.buttonText}>Create New Budget</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+      <Text style={styles.buttonText}>Back to All Budgets</Text>
+    </TouchableOpacity>
+  </View>
+);
+
+
+
 
   const renderRecommendations = () => (
     <View style={styles.container}>
       <Text style={styles.subheader}>PROJECT NEXT MONTH’S BUDGET:</Text>
-      <TextInput style={styles.input} placeholder="Income" keyboardType="numeric" onChangeText={setIncome}/>
-      <TextInput style={styles.input} placeholder="Rent" keyboardType="numeric" onChangeText={setRent} />
-      <TextInput style={styles.input} placeholder="Groceries" keyboardType="numeric" onChangeText={setGroceries}/>
-      <TextInput style={styles.input} placeholder="Dining Out" keyboardType="numeric"  onChangeText={setDiningOut}/>
-      <TextInput style={styles.input} placeholder="Other" keyboardType="numeric" onChangeText={setOtherSpending} />
+      <TextInput style={styles.input} placeholder="Income" placeholderTextColor="white" keyboardType="numeric" onChangeText={setIncome}/>
+      <TextInput style={styles.input} placeholder="Rent" placeholderTextColor="white" keyboardType="numeric" onChangeText={setRent} />
+      <TextInput style={styles.input} placeholder="Groceries" placeholderTextColor="white" keyboardType="numeric" onChangeText={setGroceries}/>
+      <TextInput style={styles.input} placeholder="Dining Out"  placeholderTextColor="white" keyboardType="numeric"  onChangeText={setDiningOut}/>
+      <TextInput style={styles.input} placeholder="Other" placeholderTextColor="white" keyboardType="numeric" onChangeText={setOtherSpending} />
       <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
         <Text style={styles.buttonText}>Finish Simulation</Text>
       </TouchableOpacity>
@@ -288,13 +301,17 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#19a482',
     padding: 20,
+    color: 'white',
+  },
+    whiteText: {
+    color: 'white',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -325,18 +342,18 @@ const styles = StyleSheet.create({
   },
   subheader: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
     marginBottom: 10,
   },
   input: {
-    backgroundColor: '#white',
+  
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'black',
+    color: 'white', // Ensures entered text is white
     marginBottom: 15,
   },
   continueButton: {
@@ -387,11 +404,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   goalsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -409,11 +421,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
-  },
-  goalProgress: {
-    fontSize: 14,
-    color: 'white',
-    marginVertical: 5,
   },
   goalAmount: {
     fontSize: 12,
@@ -436,7 +443,7 @@ const styles = StyleSheet.create({
   },
   tipsHeader: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -449,11 +456,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#white',
     padding: 10,
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 2,
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     fontSize: 12,
   },
 });
-
