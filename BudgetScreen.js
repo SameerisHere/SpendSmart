@@ -103,6 +103,9 @@ export default function BudgetScreen({ navigation }) {
       <Text style={styles.tipsHeader}>Tips</Text>
       <View style={styles.tipsContainer}>
         <Text style={styles.tip}>Prioritize needs like rent and groceries over unnecessary wants</Text>
+        <Text style={styles.tip}>Track your spending daily to stay aware of where your money goes</Text>
+        <Text style={styles.tip}>Build an emergency fund to cover unexpected expenses</Text>
+
       </View>
     </View>
   );
