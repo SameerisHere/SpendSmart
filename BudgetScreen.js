@@ -103,6 +103,9 @@ export default function BudgetScreen({ navigation }) {
       <Text style={styles.tipsHeader}>Tips</Text>
       <View style={styles.tipsContainer}>
         <Text style={styles.tip}>Prioritize needs like rent and groceries over unnecessary wants</Text>
+        <Text style={styles.tip}>Track your spending daily to stay aware of where your money goes</Text>
+        <Text style={styles.tip}>Build an emergency fund to cover unexpected expenses</Text>
+
       </View>
     </View>
   );
@@ -393,6 +396,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    paddingBottom: 60,
+
   },
   scrollContainer: {
     flexGrow: 1, //scrollable content
@@ -602,6 +607,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     borderTopWidth: 1,
     borderTopColor: '#444444',
+    paddingVertical: 16,
+    position: 'absolute', //fixed to the bottom
+    bottom: 0, //align with bottom of the screen
+    width: '100%', 
   },
   navItem: {
     alignItems: 'center',
@@ -612,6 +621,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+
+
 
 
 
