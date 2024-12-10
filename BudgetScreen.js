@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
+
 
   export default function BudgetScreen() {
     const [view, setView] = useState('main');
@@ -18,6 +21,66 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
       setGoalAmount('');
       setGoalDeadline('');
       setView('main');
+    };
+
+    const generatePDF = async () => {
+      const htmlContent = `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                line-height: 1.5;
+                color: #333;
+              }
+              h1 {
+                text-align: center;
+                color: #014343;
+              }
+              ul {
+                padding-left: 20px;
+              }
+              li {
+                margin-bottom: 10px;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Budget Summary</h1>
+            <p><strong>Monthly Income Post-Tax:</strong> $${income || 0}</p>
+            <p><strong>Saved:</strong> $${savings || 0}</p>
+            <p><strong>Total Spent:</strong> $${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</p>
+            <h2>Spending Breakdown</h2>
+            <ul>
+              <li><strong>Rent:</strong> $${rent || 0}</li>
+              <li><strong>Groceries:</strong> $${groceries || 0}</li>
+              <li><strong>Dining Out:</strong> $${diningOut || 0}</li>
+              <li><strong>Other:</strong> $${otherSpending || 0}</li>
+            </ul>
+            <h2>Recommendations</h2>
+            <p>You spent <strong>$${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</strong> on unnecessary expenses:</p>
+            <ul>
+              <li>${diningOut} spent on dining out.</li>
+              <li>${otherSpending} spent on other expenses.</li>
+            </ul>
+            <p>Consider spending more on groceries and cutting down on dining out to save more.</p>
+          </body>
+        </html>
+      `;
+    
+      try {
+        const { uri } = await Print.printToFileAsync({ html: htmlContent });
+        Alert.alert('PDF Generated', `Your PDF has been saved to: ${uri}`);
+        if (await Sharing.isAvailableAsync()) {
+          await Sharing.shareAsync(uri);
+        } else {
+          Alert.alert('Sharing Unavailable', 'The sharing feature is not available on this device.');
+        }
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        Alert.alert('Error', 'There was an error generating the PDF.');
+      }
     };
 
       const renderMainView = () => (
@@ -235,7 +298,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
             <Text style={[styles.whiteText, styles.centeredText]}>${income}</Text>
             <Text style={[styles.whiteText, styles.centeredText]}>SAVED: ${savings}</Text>
             <Text style={[styles.whiteText, styles.centeredText]}>
-              SPENT: ${parseFloat(rent) + parseFloat(groceries) + parseFloat(diningOut) + parseFloat(otherSpending)}
+              SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
             </Text>
           </View>
           <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>YOUR SPENDING BREAKDOWN:</Text>
@@ -245,7 +308,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           <Text style={[styles.whiteText, styles.centeredText]}>Other: ${otherSpending}</Text>
           <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
           <Text style={[styles.whiteText, styles.centeredText]}>
-            ${parseFloat(diningOut) + parseFloat(otherSpending)} was spent on unnecessary expenses:
+            ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
           </Text>
           <Text style={[styles.whiteText, styles.centeredText]}>${diningOut} spent on dining out.</Text>
           <Text style={[styles.whiteText, styles.centeredText]}>${otherSpending} spent on other.</Text>
@@ -256,6 +319,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
           </TouchableOpacity>
           <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
             <Text style={styles.buttonText}>Create New Budget</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
+            <Text style={styles.buttonText}>Download PDF</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
             <Text style={styles.buttonText}>Back to All Budgets</Text>
