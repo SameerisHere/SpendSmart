@@ -227,43 +227,41 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
         </View>
       );      
 
-const renderSpendingHabits = () => (
-  <View style={styles.container}>
-    <Text style={[styles.header, styles.whiteText]}>BUDGET</Text>
-    <View style={styles.circleContainer}>
-      <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
-      <Text style={styles.whiteText}>${income}</Text>
-      <Text style={styles.whiteText}>SAVED: ${savings}</Text>
-      <Text style={styles.whiteText}>
-        SPENT: ${parseFloat(rent) + parseFloat(groceries) + parseFloat(diningOut) + parseFloat(otherSpending)}
-      </Text>
-    </View>
-    <Text style={[styles.subheader, styles.whiteText]}>YOUR SPENDING BREAKDOWN:</Text>
-    <Text style={styles.whiteText}>Rent: ${rent}</Text>
-    <Text style={styles.whiteText}>Groceries: ${groceries}</Text>
-    <Text style={styles.whiteText}>Dining Out: ${diningOut}</Text>
-    <Text style={styles.whiteText}>Other: ${otherSpending}</Text>
-    <Text style={[styles.subheader, styles.whiteText]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
-    <Text style={styles.whiteText}>
-      ${parseFloat(diningOut) + parseFloat(otherSpending)} was spent on unnecessary expenses:
-    </Text>
-    <Text style={styles.whiteText}>${diningOut} spent on dining out.</Text>
-    <Text style={styles.whiteText}>${otherSpending} spent on other.</Text>
-    <Text style={styles.whiteText}>Spend more on groceries to cut dining costs.</Text>
-    <Text style={styles.whiteText}>Spend less on other unnecessary spending to save more.</Text>
-    <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-      <Text style={styles.buttonText}>Simulate a Budget</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
-      <Text style={styles.buttonText}>Create New Budget</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
-      <Text style={styles.buttonText}>Back to All Budgets</Text>
-    </TouchableOpacity>
-  </View>
-);
-
-
+      const renderSpendingHabits = () => (
+        <View style={styles.container}>
+          <Text style={[styles.header, styles.whiteText, styles.centeredText]}>BUDGET</Text>
+          <View style={[styles.circleContainer, styles.centeredContent]}>
+            <Text style={[styles.whiteText, styles.centeredText]}>MONTHLY INCOME POST-TAX:</Text>
+            <Text style={[styles.whiteText, styles.centeredText]}>${income}</Text>
+            <Text style={[styles.whiteText, styles.centeredText]}>SAVED: ${savings}</Text>
+            <Text style={[styles.whiteText, styles.centeredText]}>
+              SPENT: ${parseFloat(rent) + parseFloat(groceries) + parseFloat(diningOut) + parseFloat(otherSpending)}
+            </Text>
+          </View>
+          <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>YOUR SPENDING BREAKDOWN:</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Rent: ${rent}</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Groceries: ${groceries}</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Dining Out: ${diningOut}</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Other: ${otherSpending}</Text>
+          <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>
+            ${parseFloat(diningOut) + parseFloat(otherSpending)} was spent on unnecessary expenses:
+          </Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>${diningOut} spent on dining out.</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>${otherSpending} spent on other.</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Spend more on groceries to cut dining costs.</Text>
+          <Text style={[styles.whiteText, styles.centeredText]}>Spend less on other unnecessary spending to save more.</Text>
+          <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
+            <Text style={styles.buttonText}>Simulate a Budget</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+            <Text style={styles.buttonText}>Create New Budget</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+            <Text style={styles.buttonText}>Back to All Budgets</Text>
+          </TouchableOpacity>
+        </View>
+      );
 
 
   const renderRecommendations = () => (
@@ -462,4 +460,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
   },
+  centeredText: {
+    textAlign: 'center',
+  },
+  centeredContent: {
+    alignItems: 'center',
+  }
 });
