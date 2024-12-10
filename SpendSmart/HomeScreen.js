@@ -189,18 +189,21 @@ const styles = StyleSheet.create({
   },
   lessonsContainer: {
     flex: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    flexDirection: 'row',  // Arrange circles horizontally
+    justifyContent: 'space-evenly', // Distribute circles evenly
+    flexWrap: 'wrap', // Allow circles to wrap to the next line
+    alignItems: 'center', // Center vertically
     paddingVertical: 40,
   },
   lessonCircle: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 200,         // Increase the width for the rectangle shape
+    height: 80,         // Adjust the height for the rectangle shape
     backgroundColor: '#2276F0',
     justifyContent: 'center',
     alignItems: 'center',
-  },
+    margin: 10,         // Add space between the rectangles
+    borderRadius: 8,    // Optional: Slight rounding of corners for better appearance
+  },  
   inactiveLesson: {
     backgroundColor: '#d0d3d4',
   },
