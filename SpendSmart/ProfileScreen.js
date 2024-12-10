@@ -49,19 +49,23 @@ const ProfileScreen = () => {
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
 
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home-outline" size={24} color="white" />
+     {/* Bottom Navigation */}
+     <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+          <Ionicons name="book-outline" size={24} color="white" />
+          <Text style={styles.navText}>Learn</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
           <Ionicons name="cash-outline" size={24} color="white" />
+          <Text style={styles.navText}>Budget</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Goals')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
           <Ionicons name="stats-chart-outline" size={24} color="white" />
+          <Text style={styles.navText}>Goals</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
           <Ionicons name="person-circle-outline" size={24} color="white" />
+          <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </View>
