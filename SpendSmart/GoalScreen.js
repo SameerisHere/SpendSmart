@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function GoalsScreen() {
   const [view, setView] = useState('main'); // Tracks the current view (main, addGoalStep1, addGoalStep2)
@@ -19,6 +20,48 @@ export default function GoalsScreen() {
     setGoalDeadline('');
     setAutomaticAdjust(false);
     setView('main');
+  };
+
+  const validateStep1 = () => {
+    if (!goalName.trim()) {
+      Alert.alert('Validation Error', 'Please enter a name for your goal.');
+      return false;
+    }
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(goalName)) {
+      Alert.alert('Validation Error', 'Goal name can only contain letters and spaces.');
+      return false;
+    }
+    if (!goalAmount || parseFloat(goalAmount) <= 0) {
+      Alert.alert('Validation Error', 'Please enter a valid goal amount greater than 0.');
+      return false;
+    }
+    return true;
+  };
+
+  const validateStep2 = () => {
+    if (!goalDeadline.trim()) {
+      Alert.alert('Validation Error', 'Please enter a deadline for your goal.');
+      return false;
+    }
+    const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+    if (!dateRegex.test(goalDeadline)) {
+      Alert.alert('Validation Error', 'Please enter the deadline in the format MM/DD/YYYY.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleStep1Continue = () => {
+    if (validateStep1()) {
+      setView('addGoalStep2');
+    }
+  };
+
+  const handleAddNewGoal = () => {
+    if (validateStep2()) {
+      addNewGoal();
+    }
   };
 
   const renderMainView = () => (
@@ -48,37 +91,49 @@ export default function GoalsScreen() {
   const renderAddGoalStep1 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>Add a Goal</Text>
+      <View style={styles.steps}>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>1</Text></View>
+        <View style={styles.line}></View>
+        <View style={styles.circle}><Text style={styles.circleText}>2</Text></View>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
+        placeholderTextColor="#808080"
         value={goalName}
         onChangeText={setGoalName}
       />
       <TextInput
         style={styles.input}
         placeholder="Goal Amount"
+        placeholderTextColor="#808080"
         value={goalAmount}
         onChangeText={setGoalAmount}
         keyboardType="numeric"
       />
-      <TouchableOpacity style={styles.linkAccount}>
-        <Text style={styles.linkAccountText}>Link a Financial Account +</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setView('addGoalStep2')}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setView('main')} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>×</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setView('main')}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   const renderAddGoalStep2 = () => (
     <View style={styles.container}>
       <Text style={styles.header}>Add a Goal</Text>
+      <View style={styles.steps}>
+        <View style={styles.circle}><Text style={styles.circleText}>1</Text></View>
+        <View style={styles.line}></View>
+        <View style={[styles.circle, styles.activeCircle]}><Text style={styles.circleText}>2</Text></View>
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Goal Deadline (MM/DD/YYYY)"
+        placeholderTextColor="#808080"
         value={goalDeadline}
         onChangeText={setGoalDeadline}
       />
@@ -89,12 +144,14 @@ export default function GoalsScreen() {
           onValueChange={setAutomaticAdjust}
         />
       </View>
-      <TouchableOpacity style={styles.continueButton} onPress={addNewGoal}>
-        <Text style={styles.buttonText}>Start Saving!</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setView('main')} style={styles.closeButton}>
-        <Text style={styles.closeButtonText}>×</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setView('addGoalStep1')}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={handleAddNewGoal}>
+          <Text style={styles.buttonText}>Start Saving!</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -108,7 +165,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003333',
-    padding: 20,
+    padding: 10,
   },
   header: {
     fontSize: 24,
@@ -145,8 +202,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   addButton: {
-    backgroundColor: '#007777',
+    backgroundColor: '#ffffff',
     borderRadius: 25,
+    borderColor: '#000000',
+    borderWidth: 2,
     width: 50,
     height: 50,
     justifyContent: 'center',
@@ -155,11 +214,12 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     fontSize: 24,
-    color: 'white',
+    color: 'black',
   },
   tipsHeader: {
     fontSize: 18,
     color: 'white',
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   tipsContainer: {
@@ -168,41 +228,37 @@ const styles = StyleSheet.create({
   },
   tip: {
     width: '30%',
-    backgroundColor: '#004c4c',
+    backgroundColor: '#white',
     padding: 10,
     borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 2,
     color: 'white',
     textAlign: 'center',
     fontSize: 12,
   },
   input: {
-    backgroundColor: '#789b9b',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     marginBottom: 15,
   },
   continueButton: {
     backgroundColor: '#005e5e',
     paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  linkAccount: {
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  linkAccountText: {
-    color: '#b3a1d9',
-    textDecorationLine: 'underline',
   },
   closeButton: {
     position: 'absolute',
@@ -223,5 +279,63 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     flex: 1,
+  },
+  steps: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  line: {
+    width: 30,
+    height: 2,
+    backgroundColor: '#d3d3d3',
+  },
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#797979',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeCircle: {
+    backgroundColor: '#014343',
+  },
+  circleText: {
+    color: 'white',
+    fontSize: 16,   
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: 'black',
+    borderTopWidth: 1,
+  },
+  navText: {
+    color: 'white',
+    fontSize: 12,          
+    marginTop: 5,          
+  },
+  navItem: {
+    alignItems: 'center',  
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: '#BF0B0B',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
