@@ -2,387 +2,175 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
-import { ScrollView } from 'react-native'
+import { ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
+export default function BudgetScreen({ navigation }) {
+  const [view, setView] = useState('main');
+  const [goalName, setGoalName] = useState('');
+  const [goalAmount, setGoalAmount] = useState('');
+  const [goalDeadline, setGoalDeadline] = useState('');
+  const [step, setStep] = useState(0);
+  const [goals, setGoals] = useState([
+    { name: 'October', spent: 3500, saved: 500 },
+    { name: 'November', spent: 3800, saved: 200 },
+  ]);
 
-  export default function BudgetScreen() {
-    const [view, setView] = useState('main');
-    const [goalName, setGoalName] = useState('');
-    const [goalAmount, setGoalAmount] = useState('');
-    const [goalDeadline, setGoalDeadline] = useState('');
-    const [step, setStep] = useState(0);
-    const [goals, setGoals] = useState([
-      { name: 'October', spent: 3500, saved: 500 },
-      { name: 'November', spent: 3800, saved: 200 },
-    ]);
+  const addNewGoal = () => {
+    setGoals([...goals, { name: goalName, spent: 0, saved: 0 }]);
+    setGoalName('');
+    setGoalAmount('');
+    setGoalDeadline('');
+    setView('main');
+  };
 
-    const addNewGoal = () => {
-      setGoals([...goals, { name: goalName, spent: 0, saved: 0 }]);
-      setGoalName('');
-      setGoalAmount('');
-      setGoalDeadline('');
-      setView('main');
-    };
+  const generatePDF = async () => {
+    const htmlContent = `
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              padding: 20px;
+              line-height: 1.5;
+              color: #333;
+            }
+            h1 {
+              text-align: center;
+              color: #014343;
+            }
+            ul {
+              padding-left: 20px;
+            }
+            li {
+              margin-bottom: 10px;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Budget Summary</h1>
+          <p><strong>Monthly Income Post-Tax:</strong> $${income || 0}</p>
+          <p><strong>Saved:</strong> $${savings || 0}</p>
+          <p><strong>Total Spent:</strong> $${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</p>
+          <h2>Spending Breakdown</h2>
+          <ul>
+            <li><strong>Rent:</strong> $${rent || 0}</li>
+            <li><strong>Groceries:</strong> $${groceries || 0}</li>
+            <li><strong>Dining Out:</strong> $${diningOut || 0}</li>
+            <li><strong>Other:</strong> $${otherSpending || 0}</li>
+          </ul>
+          <h2>Recommendations</h2>
+          <p>You spent <strong>$${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</strong> on unnecessary expenses:</p>
+          <ul>
+            <li>${diningOut} spent on dining out.</li>
+            <li>${otherSpending} spent on other expenses.</li>
+          </ul>
+          <p>Consider spending more on groceries and cutting down on dining out to save more.</p>
+        </body>
+      </html>
+    `;
 
-    const generatePDF = async () => {
-      const htmlContent = `
-        <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                padding: 20px;
-                line-height: 1.5;
-                color: #333;
-              }
-              h1 {
-                text-align: center;
-                color: #014343;
-              }
-              ul {
-                padding-left: 20px;
-              }
-              li {
-                margin-bottom: 10px;
-              }
-            </style>
-          </head>
-          <body>
-            <h1>Budget Summary</h1>
-            <p><strong>Monthly Income Post-Tax:</strong> $${income || 0}</p>
-            <p><strong>Saved:</strong> $${savings || 0}</p>
-            <p><strong>Total Spent:</strong> $${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</p>
-            <h2>Spending Breakdown</h2>
-            <ul>
-              <li><strong>Rent:</strong> $${rent || 0}</li>
-              <li><strong>Groceries:</strong> $${groceries || 0}</li>
-              <li><strong>Dining Out:</strong> $${diningOut || 0}</li>
-              <li><strong>Other:</strong> $${otherSpending || 0}</li>
-            </ul>
-            <h2>Recommendations</h2>
-            <p>You spent <strong>$${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}</strong> on unnecessary expenses:</p>
-            <ul>
-              <li>${diningOut} spent on dining out.</li>
-              <li>${otherSpending} spent on other expenses.</li>
-            </ul>
-            <p>Consider spending more on groceries and cutting down on dining out to save more.</p>
-          </body>
-        </html>
-      `;
-    
-      try {
-        const { uri } = await Print.printToFileAsync({ html: htmlContent });
-        Alert.alert('PDF Generated', `Your PDF has been saved to: ${uri}`);
-        if (await Sharing.isAvailableAsync()) {
-          await Sharing.shareAsync(uri);
-        } else {
-          Alert.alert('Sharing Unavailable', 'The sharing feature is not available on this device.');
-        }
-      } catch (error) {
-        console.error('Error generating PDF:', error);
-        Alert.alert('Error', 'There was an error generating the PDF.');
+    try {
+      const { uri } = await Print.printToFileAsync({ html: htmlContent });
+      Alert.alert('PDF Generated', `Your PDF has been saved to: ${uri}`);
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(uri);
+      } else {
+        Alert.alert('Sharing Unavailable', 'The sharing feature is not available on this device.');
       }
-    };
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      Alert.alert('Error', 'There was an error generating the PDF.');
+    }
+  };
 
-      const renderMainView = () => (
-        <View style={styles.container}>
-          <Text style={styles.header}>BUDGET</Text>
-          <View style={styles.goalsContainer}>
-            {goals.map((goal, index) => (
-              <View key={index} style={styles.goalCard}>
-                <Text style={styles.goalTitle}>{goal.name}</Text>
-                <Text style={styles.goalAmount}>
-                  Spent: ${goal.spent} / Saved: ${goal.saved}
-                </Text>
-              </View>
-            ))}
-            <TouchableOpacity style={styles.addButton} onPress={() => setStep('Step1')}>
-              <Text style={styles.addButtonText}>+</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.tipsHeader}>Tips</Text>
-          <View style={styles.tipsContainer}>
-            <Text style={styles.tip}>Prioritize needs like rent and groceries over unnecessary wants</Text>
-            <Text style={styles.tip}>Build an emergency fund to cover unexpected expenses</Text>
-            <Text style={styles.tip}>Track your spending daily to stay aware of where your money goes</Text>
-          </View>
-        </View>
-      );
-  
-      const [income, setIncome] = useState('');
-      const [savings, setSavings] = useState('');
-      
-      const validateStep1 = () => {
-        if (!income || Number(income) <= 0 || !savings || Number(savings) <= 0) {
-          Alert.alert('Validation Error', 'Please enter values greater than 0 for both fields.');
-          return false;
-        }
-        return true;
-      };
-      
-      const handleStep1Continue = () => {
-        if (validateStep1()) {
-          setStep(2);
-        }
-      };
-      
-      const renderStep1 = () => (
-        <View style={styles.container}>
-          <Text style={styles.header}>BUDGET</Text>
-          <View style={styles.steps}>
-            <View style={[styles.circle, styles.activeCircle]}>
-              <Text style={styles.circleText}>1</Text>
-            </View>
-            <View style={styles.line}></View>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>2</Text>
-            </View>
-            <View style={styles.line}></View>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>3</Text>
-            </View>
-          </View>
-          <Text style={styles.subheader}>Income and Savings:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="What was this month's post-tax income?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={income}
-            onChangeText={setIncome}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="How much was saved this month?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={savings}
-            onChangeText={setSavings}
-          />
-          <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
-            <Text style={styles.buttonText}>Continue</Text>
-          </TouchableOpacity>
-        </View>
-      );
-      
-
-      const [rent, setRent] = useState('');
-      const [groceries, setGroceries] = useState('');
-      const [diningOut, setDiningOut] = useState('');
-      
-      const validateStep2 = () => {
-        if (
-          !rent || Number(rent) <= 0 ||
-          !groceries || Number(groceries) <= 0 ||
-          !diningOut || Number(diningOut) <= 0
-        ) {
-          Alert.alert('Validation Error', 'Please enter values greater than 0 for all fields.');
-          return false;
-        }
-        return true;
-      };
-      
-      const handleStep2Continue = () => {
-        if (validateStep2()) {
-          setStep(3);
-        }
-      };
-      
-      const renderStep2 = () => (
-        <View style={styles.container}>
-          <Text style={styles.header}>BUDGET</Text>
-          <View style={styles.steps}>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>1</Text>
-            </View>
-            <View style={[styles.line, styles.activeLine]}></View>
-            <View style={[styles.circle, styles.activeCircle]}>
-              <Text style={styles.circleText}>2</Text>
-            </View>
-            <View style={styles.line}></View>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>3</Text>
-            </View>
-          </View>
-          <Text style={styles.subheader}>Expenses:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="What was this month’s spend on rent?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={rent}
-            onChangeText={setRent}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="What was this month’s spend on groceries?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={groceries}
-            onChangeText={setGroceries}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="What was this month’s spend on dining?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={diningOut}
-            onChangeText={setDiningOut}
-          />
-          <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
-              <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep2Continue}>
-              <Text style={styles.buttonText}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-      
-
-      const [otherSpending, setOtherSpending] = useState('');
-
-      const validateStep3 = () => {
-        if (!otherSpending || Number(otherSpending) <= 0) {
-          Alert.alert('Validation Error', 'Please enter a value greater than 0 for other spending.');
-          return false;
-        }
-        return true;
-      };
-      
-      const handleStep3Continue = () => {
-        if (validateStep3()) {
-          setStep(4); // Navigate to Step 4 (Spending Habits)
-        }
-      };
-      
-      const renderStep3 = () => (
-        <View style={styles.container}>
-          <Text style={styles.header}>BUDGET</Text>
-          <View style={styles.steps}>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>1</Text>
-            </View>
-            <View style={[styles.line, styles.activeLine]}></View>
-            <View style={styles.circle}>
-              <Text style={styles.circleText}>2</Text>
-            </View>
-            <View style={[styles.line, styles.activeLine]}></View>
-            <View style={[styles.circle, styles.activeCircle]}>
-              <Text style={styles.circleText}>3</Text>
-            </View>
-          </View>
-          <Text style={styles.subheader}>Other Spending:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="This month’s total spent on other?"
-            placeholderTextColor="white"
-            keyboardType="numeric"
-            value={otherSpending}
-            onChangeText={setOtherSpending}
-          />
-          <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
-              <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep3Continue}>
-              <Text style={styles.buttonText}>Create Budget</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );      
-
-      const renderSpendingHabits = () => (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Text style={styles.header}>BUDGET</Text>
-      
-          <View style={styles.section}>
-            <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
-            <Text style={styles.whiteText}>${income}</Text>
-            <Text style={styles.whiteText}>SAVED: ${savings}</Text>
-            <Text style={styles.whiteText}>
-              SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
-            </Text>
-          </View>
-      
-          <View style={[styles.section, styles.centeredSection]}>
-            <Text style={styles.subheader}>YOUR SPENDING BREAKDOWN:</Text>
-            <Text style={styles.centeredText}>Rent: ${rent}</Text>
-            <Text style={styles.centeredText}>Groceries: ${groceries}</Text>
-            <Text style={styles.centeredText}>Dining Out: ${diningOut}</Text>
-            <Text style={styles.centeredText}>Other: ${otherSpending}</Text>
-          </View>
-      
-          <View style={styles.section}>
-            <Text style={styles.recommendationHeader}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
-            <Text style={styles.recommendationText}>
-              ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
-            </Text>
-            <Text style={styles.recommendationText}>${diningOut} spent on dining out.</Text>
-            <Text style={styles.recommendationText}>${otherSpending} spent on other.</Text>
-            <Text style={styles.recommendationText}>Spend more on groceries to cut dining costs.</Text>
-            <Text style={styles.recommendationText}>Spend less on other unnecessary spending to save more.</Text>
-          </View>
-      
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-              <Text style={styles.buttonText}>Simulate a Budget</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
-              <Text style={styles.buttonText}>Create New Budget</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
-              <Text style={styles.buttonText}>Download PDF</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
-              <Text style={styles.buttonText}>Back to All Budgets</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      );
-      
-      
-
-  const renderRecommendations = () => (
+  const renderMainView = () => (
     <View style={styles.container}>
-      <Text style={styles.subheader}>PROJECT NEXT MONTH’S BUDGET:</Text>
-      <TextInput style={styles.input} placeholder="Income" placeholderTextColor="white" keyboardType="numeric" onChangeText={setIncome}/>
-      <TextInput style={styles.input} placeholder="Rent" placeholderTextColor="white" keyboardType="numeric" onChangeText={setRent} />
-      <TextInput style={styles.input} placeholder="Groceries" placeholderTextColor="white" keyboardType="numeric" onChangeText={setGroceries}/>
-      <TextInput style={styles.input} placeholder="Dining Out"  placeholderTextColor="white" keyboardType="numeric"  onChangeText={setDiningOut}/>
-      <TextInput style={styles.input} placeholder="Other" placeholderTextColor="white" keyboardType="numeric" onChangeText={setOtherSpending} />
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
-        <Text style={styles.buttonText}>Finish Simulation</Text>
+      <Text style={styles.header}>BUDGET</Text>
+      <View style={styles.goalsContainer}>
+        {goals.map((goal, index) => (
+          <View key={index} style={styles.goalCard}>
+            <Text style={styles.goalTitle}>{goal.name}</Text>
+            <Text style={styles.goalAmount}>
+              Spent: ${goal.spent} / Saved: ${goal.saved}
+            </Text>
+          </View>
+        ))}
+        <TouchableOpacity style={styles.addButton} onPress={() => setStep('Step1')}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.tipsHeader}>Tips</Text>
+      <View style={styles.tipsContainer}>
+        <Text style={styles.tip}>Prioritize needs like rent and groceries over unnecessary wants</Text>
+      </View>
+    </View>
+  );
+
+  const renderStep1 = () => (
+    <View style={styles.container}>
+      {/* Step 1 Content */}
+    </View>
+  );
+
+  // Bottom Navbar
+  const renderNavbar = () => (
+    <View style={styles.navbar}>
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Text style={styles.navText}>Home</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate('Goals')}
+      >
+        <Text style={styles.navText}>Goals</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate('Budget')}
+      >
+        <Text style={styles.navText}>Budget</Text>
       </TouchableOpacity>
     </View>
   );
 
-  switch (step) {
-    case 0:
-      return renderMainView();
-    case 1:
-      return renderStep1();
-    case 2:
-      return renderStep2();
-    case 3:
-      return renderStep3();
-    case 4:
-      return renderSpendingHabits();
-    case 5:
-      return renderRecommendations();
-    default:
-      return renderStep1();
-  }
+  return (
+    <View style={styles.screenContainer}>
+      {view === 'main' ? renderMainView() :
+       view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+          <Ionicons name="book-outline" size={24} color="white" />
+          <Text style={styles.navText}>Learn</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
+          <Ionicons name="cash-outline" size={24} color="white" />
+          <Text style={styles.navText}>Budget</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
+          <Ionicons name="stats-chart-outline" size={24} color="white" />
+          <Text style={styles.navText}>Goals</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
+          <Ionicons name="person-circle-outline" size={24} color="white" />
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
     flex: 1,
     backgroundColor: '#003333',
-    paddingHorizontal: 20, //content wont touch screen edges
-    paddingVertical: 20,
-    color: 'white',
+  },
+  container: {
+    flex: 1,
+    padding: 10,
   },
   scrollContainer: {
     flexGrow: 1, //scrollable content
@@ -585,7 +373,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, //padding
     paddingBottom: 20, //padding
   },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: '#000000',
+    borderTopWidth: 1,
+    borderTopColor: '#444444',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    color: 'white',
+    fontSize: 12,
+    marginTop: 5,
+  },
 });
+
+
 
 
 
