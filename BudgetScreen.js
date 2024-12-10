@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
+import { ScrollView } from 'react-native'
 
 
   export default function BudgetScreen() {
@@ -291,44 +292,55 @@ import * as Sharing from 'expo-sharing';
       );      
 
       const renderSpendingHabits = () => (
-        <View style={styles.container}>
-          <Text style={[styles.header, styles.whiteText, styles.centeredText]}>BUDGET</Text>
-          <View style={[styles.circleContainer, styles.centeredContent]}>
-            <Text style={[styles.whiteText, styles.centeredText]}>MONTHLY INCOME POST-TAX:</Text>
-            <Text style={[styles.whiteText, styles.centeredText]}>${income}</Text>
-            <Text style={[styles.whiteText, styles.centeredText]}>SAVED: ${savings}</Text>
-            <Text style={[styles.whiteText, styles.centeredText]}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.header}>BUDGET</Text>
+      
+          <View style={styles.section}>
+            <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
+            <Text style={styles.whiteText}>${income}</Text>
+            <Text style={styles.whiteText}>SAVED: ${savings}</Text>
+            <Text style={styles.whiteText}>
               SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
             </Text>
           </View>
-          <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>YOUR SPENDING BREAKDOWN:</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Rent: ${rent}</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Groceries: ${groceries}</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Dining Out: ${diningOut}</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Other: ${otherSpending}</Text>
-          <Text style={[styles.subheader, styles.whiteText, styles.centeredText]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>
-            ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
-          </Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>${diningOut} spent on dining out.</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>${otherSpending} spent on other.</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Spend more on groceries to cut dining costs.</Text>
-          <Text style={[styles.whiteText, styles.centeredText]}>Spend less on other unnecessary spending to save more.</Text>
-          <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-            <Text style={styles.buttonText}>Simulate a Budget</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
-            <Text style={styles.buttonText}>Create New Budget</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
-            <Text style={styles.buttonText}>Download PDF</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
-            <Text style={styles.buttonText}>Back to All Budgets</Text>
-          </TouchableOpacity>
-        </View>
+      
+          <View style={[styles.section, styles.centeredSection]}>
+            <Text style={styles.subheader}>YOUR SPENDING BREAKDOWN:</Text>
+            <Text style={styles.centeredText}>Rent: ${rent}</Text>
+            <Text style={styles.centeredText}>Groceries: ${groceries}</Text>
+            <Text style={styles.centeredText}>Dining Out: ${diningOut}</Text>
+            <Text style={styles.centeredText}>Other: ${otherSpending}</Text>
+          </View>
+      
+          <View style={styles.section}>
+            <Text style={styles.recommendationHeader}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
+            <Text style={styles.recommendationText}>
+              ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
+            </Text>
+            <Text style={styles.recommendationText}>${diningOut} spent on dining out.</Text>
+            <Text style={styles.recommendationText}>${otherSpending} spent on other.</Text>
+            <Text style={styles.recommendationText}>Spend more on groceries to cut dining costs.</Text>
+            <Text style={styles.recommendationText}>Spend less on other unnecessary spending to save more.</Text>
+          </View>
+      
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
+              <Text style={styles.buttonText}>Simulate a Budget</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+              <Text style={styles.buttonText}>Create New Budget</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
+              <Text style={styles.buttonText}>Download PDF</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+              <Text style={styles.buttonText}>Back to All Budgets</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       );
-
+      
+      
 
   const renderRecommendations = () => (
     <View style={styles.container}>
@@ -366,18 +378,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003333',
-    padding: 20,
+    paddingHorizontal: 20, //content wont touch screen edges
+    paddingVertical: 20,
     color: 'white',
   },
-    whiteText: {
+  scrollContainer: {
+    flexGrow: 1, //scrollable content
+    paddingHorizontal: 20, //horizontal padding
+    paddingBottom: 30, //padding
+    backgroundColor: '#003333', 
+  },
+  whiteText: {
     color: 'white',
+    fontSize: 18, //increased font size
+    lineHeight: 23, //spacing
+    textAlign: 'center',
   },
   header: {
-    fontSize: 24,
+    fontSize: 28, //larger
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 15, //reducing spacing
   },
   steps: {
     flexDirection: 'row',
@@ -405,34 +427,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#b3a1d9',
   },
   subheader: {
-    fontSize: 18,
+    fontSize: 19, //larger
+    fontWeight: 'bold', 
     color: 'white',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   input: {
-  
     borderRadius: 10,
     borderColor: 'white',
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'white', // Ensures entered text is white
+    color: 'white',
     marginBottom: 15,
   },
   continueButton: {
     backgroundColor: '#005e5e',
-    paddingVertical: 10,
+    paddingVertical: 12, //for touch targets
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 8, //reduced spacing 
   },
   smallerContinueButton: {
     backgroundColor: '#BF0B0B',
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 8, //spacing
   },
   buttonText: {
     color: 'white',
@@ -445,7 +467,7 @@ const styles = StyleSheet.create({
   },
   circleText: {
     color: 'white',
-    fontSize: 16,   
+    fontSize: 16,
   },
   buttonRow: {
     flexDirection: 'row',
@@ -528,8 +550,40 @@ const styles = StyleSheet.create({
   },
   centeredText: {
     textAlign: 'center',
+    fontSize: 16,
+    lineHeight: 22,
+    color: 'white',
+    marginBottom: 5, //spacing 
   },
   centeredContent: {
     alignItems: 'center',
-  }
+  },
+  section: {
+    marginBottom: 20, //spacing
+  },
+  recommendationHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  recommendationText: {
+    fontSize: 16,
+    lineHeight: 22,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 8, 
+  },
+  centeredSection: {
+    alignItems: 'center', 
+  },
+  buttonContainer: {
+    marginTop: 10, //reduced top spacing
+    paddingHorizontal: 20, //padding
+    paddingBottom: 20, //padding
+  },
 });
+
+
+
