@@ -169,7 +169,7 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#005e5e',
+    backgroundColor: '#003333',
   },
   header: {
     flexDirection: 'row',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#d0d3d4',
   },
   activeLesson: {
-    backgroundColor: '#07e4b8', // Active lesson color (blue-green)
+    backgroundColor: '#059d80', // Active lesson color (blue-green)
   },
   lessonText: {
     textAlign: 'center',
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   lessonContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#005e5e',
+    backgroundColor: '#003333',
   },
   lessonTitle: {
     fontSize: 24,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',  // Align items vertically in the center
   },
   continueButton: {
-    backgroundColor: '#1abc9c',
+    backgroundColor: '#005e5e',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
