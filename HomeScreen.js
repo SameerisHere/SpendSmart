@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#003333',
+    paddingBottom: 60,
   },
   header: {
     flexDirection: 'row',
@@ -248,8 +249,11 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingVertical: 16,
     backgroundColor: '#000',
+    position: 'absolute', //fixed to the bottom
+    bottom: 0, //align with bottom of the screen
+    width: '100%', 
   },
   navText: {
     color: 'white',        // White text for visibility
