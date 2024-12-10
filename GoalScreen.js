@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function GoalsScreen() {
+export default function GoalsScreen({ navigation }) {
   const [view, setView] = useState('main'); // Tracks the current view (main, addGoalStep1, addGoalStep2)
   const [goalName, setGoalName] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
@@ -156,15 +156,37 @@ export default function GoalsScreen() {
   );
 
   return (
-    view === 'main' ? renderMainView() :
-    view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()
+    <View style={styles.screenContainer}>
+      {view === 'main' ? renderMainView() :
+       view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+          <Ionicons name="book-outline" size={24} color="white" />
+          <Text style={styles.navText}>Learn</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
+          <Ionicons name="cash-outline" size={24} color="white" />
+          <Text style={styles.navText}>Budget</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
+          <Ionicons name="stats-chart-outline" size={24} color="white" />
+          <Text style={styles.navText}>Goals</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
+          <Ionicons name="person-circle-outline" size={24} color="white" />
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
     flex: 1,
     backgroundColor: '#003333',
+  },
+  container: {
+    flex: 1,
     padding: 10,
   },
   header: {
@@ -310,16 +332,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    backgroundColor: 'black',
+    backgroundColor: '#000000',
     borderTopWidth: 1,
+    borderTopColor: '#444444',
+  },
+  navItem: {
+    alignItems: 'center',
   },
   navText: {
     color: 'white',
-    fontSize: 12,          
-    marginTop: 5,          
-  },
-  navItem: {
-    alignItems: 'center',  
+    fontSize: 12,
+    marginTop: 5,
   },
   buttonContainer: {
     flexDirection: 'row',
