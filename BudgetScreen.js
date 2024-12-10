@@ -107,60 +107,282 @@ export default function BudgetScreen({ navigation }) {
     </View>
   );
 
+  const [income, setIncome] = useState('');
+  const [savings, setSavings] = useState('');
+  
+  const validateStep1 = () => {
+    if (!income || Number(income) <= 0 || !savings || Number(savings) <= 0) {
+      Alert.alert('Validation Error', 'Please enter values greater than 0 for both fields.');
+      return false;
+    }
+    return true;
+  };
+  
+  const handleStep1Continue = () => {
+    if (validateStep1()) {
+      setStep(2);
+    }
+  };
+  
   const renderStep1 = () => (
     <View style={styles.container}>
-      {/* Step 1 Content */}
+      <Text style={styles.header}>BUDGET</Text>
+      <View style={styles.steps}>
+        <View style={[styles.circle, styles.activeCircle]}>
+          <Text style={styles.circleText}>1</Text>
+        </View>
+        <View style={styles.line}></View>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>2</Text>
+        </View>
+        <View style={styles.line}></View>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>3</Text>
+        </View>
+      </View>
+      <Text style={styles.subheader}>Income and Savings:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="What was this month's post-tax income?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={income}
+        onChangeText={setIncome}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="How much was saved this month?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={savings}
+        onChangeText={setSavings}
+      />
+      <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
+        <Text style={styles.buttonText}>Continue</Text>
+      </TouchableOpacity>
     </View>
   );
+  
 
-  // Bottom Navbar
-  const renderNavbar = () => (
-    <View style={styles.navbar}>
-      <TouchableOpacity
-        style={styles.navItem}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Text style={styles.navText}>Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.navItem}
-        onPress={() => navigation.navigate('Goals')}
-      >
-        <Text style={styles.navText}>Goals</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.navItem}
-        onPress={() => navigation.navigate('Budget')}
-      >
-        <Text style={styles.navText}>Budget</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  return (
-    <View style={styles.screenContainer}>
-      {view === 'main' ? renderMainView() :
-       view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
-          <Ionicons name="book-outline" size={24} color="white" />
-          <Text style={styles.navText}>Learn</Text>
+  const [rent, setRent] = useState('');
+  const [groceries, setGroceries] = useState('');
+  const [diningOut, setDiningOut] = useState('');
+  
+  const validateStep2 = () => {
+    if (
+      !rent || Number(rent) <= 0 ||
+      !groceries || Number(groceries) <= 0 ||
+      !diningOut || Number(diningOut) <= 0
+    ) {
+      Alert.alert('Validation Error', 'Please enter values greater than 0 for all fields.');
+      return false;
+    }
+    return true;
+  };
+  
+  const handleStep2Continue = () => {
+    if (validateStep2()) {
+      setStep(3);
+    }
+  };
+  
+  const renderStep2 = () => (
+    <View style={styles.container}>
+      <Text style={styles.header}>BUDGET</Text>
+      <View style={styles.steps}>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>1</Text>
+        </View>
+        <View style={[styles.line, styles.activeLine]}></View>
+        <View style={[styles.circle, styles.activeCircle]}>
+          <Text style={styles.circleText}>2</Text>
+        </View>
+        <View style={styles.line}></View>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>3</Text>
+        </View>
+      </View>
+      <Text style={styles.subheader}>Expenses:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="What was this month’s spend on rent?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={rent}
+        onChangeText={setRent}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="What was this month’s spend on groceries?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={groceries}
+        onChangeText={setGroceries}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="What was this month’s spend on dining?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={diningOut}
+        onChangeText={setDiningOut}
+      />
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
+          <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
-          <Ionicons name="cash-outline" size={24} color="white" />
-          <Text style={styles.navText}>Budget</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
-          <Ionicons name="stats-chart-outline" size={24} color="white" />
-          <Text style={styles.navText}>Goals</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
-          <Ionicons name="person-circle-outline" size={24} color="white" />
-          <Text style={styles.navText}>Profile</Text>
+        <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep2Continue}>
+          <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
+  
+
+  const [otherSpending, setOtherSpending] = useState('');
+
+  const validateStep3 = () => {
+    if (!otherSpending || Number(otherSpending) <= 0) {
+      Alert.alert('Validation Error', 'Please enter a value greater than 0 for other spending.');
+      return false;
+    }
+    return true;
+  };
+  
+  const handleStep3Continue = () => {
+    if (validateStep3()) {
+      setStep(4); // Navigate to Step 4 (Spending Habits)
+    }
+  };
+  
+  const renderStep3 = () => (
+    <View style={styles.container}>
+      <Text style={styles.header}>BUDGET</Text>
+      <View style={styles.steps}>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>1</Text>
+        </View>
+        <View style={[styles.line, styles.activeLine]}></View>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>2</Text>
+        </View>
+        <View style={[styles.line, styles.activeLine]}></View>
+        <View style={[styles.circle, styles.activeCircle]}>
+          <Text style={styles.circleText}>3</Text>
+        </View>
+      </View>
+      <Text style={styles.subheader}>Other Spending:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="This month’s total spent on other?"
+        placeholderTextColor="white"
+        keyboardType="numeric"
+        value={otherSpending}
+        onChangeText={setOtherSpending}
+      />
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep3Continue}>
+          <Text style={styles.buttonText}>Create Budget</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );      
+
+  const renderSpendingHabits = () => (
+    <View style={styles.spendingHabitsContainer}>
+      <View style={styles.circleContainer}>
+        <Text style={styles.subheader}>MONTHLY INCOME POST-TAX:</Text>
+        <Text style={styles.whiteText}>${income}</Text>
+        <Text style={styles.whiteText}>SAVED: ${savings}</Text>
+        <Text style={styles.whiteText}>
+        SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
+        </Text>
+      </View>
+      <Text style={[styles.subheader]}>YOUR SPENDING BREAKDOWN:</Text>
+      <Text style={styles.whiteText}>Rent: ${rent}</Text>
+      <Text style={styles.whiteText}>Groceries: ${groceries}</Text>
+      <Text style={styles.whiteText}>Dining Out: ${diningOut}</Text>
+      <Text style={styles.whiteText}>Other: ${otherSpending}</Text>
+      <Text style={[styles.subheader]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
+      <Text style={styles.whiteText}>
+      ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
+      </Text>
+      <Text style={styles.whiteText}>${diningOut} spent on dining out.</Text>
+      <Text style={styles.whiteText}>${otherSpending} spent on other.</Text>
+      <Text style={styles.whiteText}>Spend more on groceries to cut dining costs.</Text>
+      <Text style={styles.whiteText}>Spend less on other unnecessary spending to save more.</Text>
+      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
+        <Text style={styles.buttonText}>Simulate a Budget</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+        <Text style={styles.buttonText}>Create New Budget</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
+            <Text style={styles.buttonText}>Download PDF</Text>
+          </TouchableOpacity>
+      <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+        <Text style={styles.buttonText}>Back to All Budgets</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  
+const renderRecommendations = () => (
+<View style={styles.container}>
+  <Text style={styles.subheader}>PROJECT NEXT MONTH’S BUDGET:</Text>
+  <TextInput style={styles.input} placeholder="Income" placeholderTextColor="white" keyboardType="numeric" onChangeText={setIncome}/>
+  <TextInput style={styles.input} placeholder="Rent" placeholderTextColor="white" keyboardType="numeric" onChangeText={setRent} />
+  <TextInput style={styles.input} placeholder="Groceries" placeholderTextColor="white" keyboardType="numeric" onChangeText={setGroceries}/>
+  <TextInput style={styles.input} placeholder="Dining Out"  placeholderTextColor="white" keyboardType="numeric"  onChangeText={setDiningOut}/>
+  <TextInput style={styles.input} placeholder="Other" placeholderTextColor="white" keyboardType="numeric" onChangeText={setOtherSpending} />
+  <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
+    <Text style={styles.buttonText}>Finish Simulation</Text>
+  </TouchableOpacity>
+</View>
+);
+
+return (
+  <View style={styles.screenContainer}>
+    {(() => {
+      switch (step) {
+        case 0:
+          return renderMainView();
+        case 1:
+          return renderStep1();
+        case 2:
+          return renderStep2();
+        case 3:
+          return renderStep3();
+        case 4:
+          return renderSpendingHabits();
+        case 5:
+          return renderRecommendations();
+        default:
+          return renderStep1();
+      }
+    })()}
+    <View style={styles.bottomNav}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+        <Ionicons name="book-outline" size={24} color="white" />
+        <Text style={styles.navText}>Learn</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
+        <Ionicons name="cash-outline" size={24} color="white" />
+        <Text style={styles.navText}>Budget</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
+        <Ionicons name="stats-chart-outline" size={24} color="white" />
+        <Text style={styles.navText}>Goals</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
+        <Ionicons name="person-circle-outline" size={24} color="white" />
+        <Text style={styles.navText}>Profile</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
