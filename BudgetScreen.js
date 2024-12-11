@@ -528,6 +528,7 @@ const styles = StyleSheet.create({
   goalCard: {
     width: 150,
     backgroundColor: '#006b6b',
+    height: 95,
     borderRadius: 10,
     padding: 10,
     margin: 10,
