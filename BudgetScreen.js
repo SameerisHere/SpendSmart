@@ -295,42 +295,54 @@ export default function BudgetScreen({ navigation }) {
   );      
 
   const renderSpendingHabits = () => (
-    <View style={styles.spendingHabitsContainer}>
-      <View style={styles.circleContainer}>
-        <Text style={styles.subheader}>MONTHLY INCOME POST-TAX:</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={styles.header}>BUDGET</Text>
+  
+      <View style={styles.section}>
+        <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
         <Text style={styles.whiteText}>${income}</Text>
         <Text style={styles.whiteText}>SAVED: ${savings}</Text>
         <Text style={styles.whiteText}>
-        SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
+          SPENT: ${parseFloat(rent || 0) + parseFloat(groceries || 0) + parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)}
         </Text>
       </View>
-      <Text style={[styles.subheader]}>YOUR SPENDING BREAKDOWN:</Text>
-      <Text style={styles.whiteText}>Rent: ${rent}</Text>
-      <Text style={styles.whiteText}>Groceries: ${groceries}</Text>
-      <Text style={styles.whiteText}>Dining Out: ${diningOut}</Text>
-      <Text style={styles.whiteText}>Other: ${otherSpending}</Text>
-      <Text style={[styles.subheader]}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
-      <Text style={styles.whiteText}>
-      ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
-      </Text>
-      <Text style={styles.whiteText}>${diningOut} spent on dining out.</Text>
-      <Text style={styles.whiteText}>${otherSpending} spent on other.</Text>
-      <Text style={styles.whiteText}>Spend more on groceries to cut dining costs.</Text>
-      <Text style={styles.whiteText}>Spend less on other unnecessary spending to save more.</Text>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
-        <Text style={styles.buttonText}>Simulate a Budget</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
-        <Text style={styles.buttonText}>Create New Budget</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
-            <Text style={styles.buttonText}>Download PDF</Text>
-          </TouchableOpacity>
-      <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
-        <Text style={styles.buttonText}>Back to All Budgets</Text>
-      </TouchableOpacity>
-    </View>
+  
+      <View style={[styles.section, styles.centeredSection]}>
+        <Text style={styles.subheader}>YOUR SPENDING BREAKDOWN:</Text>
+        <Text style={styles.centeredText}>Rent: ${rent}</Text>
+        <Text style={styles.centeredText}>Groceries: ${groceries}</Text>
+        <Text style={styles.centeredText}>Dining Out: ${diningOut}</Text>
+        <Text style={styles.centeredText}>Other: ${otherSpending}</Text>
+      </View>
+  
+      <View style={styles.section}>
+        <Text style={styles.recommendationHeader}>RECOMMENDATIONS BASED ON YOUR SPENDING:</Text>
+        <Text style={styles.recommendationText}>
+          ${parseFloat(diningOut || 0) + parseFloat(otherSpending || 0)} was spent on unnecessary expenses:
+        </Text>
+        <Text style={styles.recommendationText}>${diningOut} spent on dining out.</Text>
+        <Text style={styles.recommendationText}>${otherSpending} spent on other.</Text>
+        <Text style={styles.recommendationText}>Spend more on groceries to cut dining costs.</Text>
+        <Text style={styles.recommendationText}>Spend less on other unnecessary spending to save more.</Text>
+      </View>
+  
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.continueButton} onPress={() => setStep(5)}>
+          <Text style={styles.buttonText}>Simulate a Budget</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={() => setStep(1)}>
+          <Text style={styles.buttonText}>Create New Budget</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
+          <Text style={styles.buttonText}>Download PDF</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
+          <Text style={styles.buttonText}>Back to All Budgets</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
+  
   
 const renderRecommendations = () => (
 <View style={styles.container}>
