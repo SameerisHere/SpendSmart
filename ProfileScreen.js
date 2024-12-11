@@ -30,7 +30,7 @@ const ProfileScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Email Address"
-        placeholderTextColor="#B3B3B3"
+        placeholderTextColor="white"
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
@@ -38,7 +38,7 @@ const ProfileScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        placeholderTextColor="#B3B3B3"
+        placeholderTextColor="white"
         secureTextEntry={true}
         value={password}
         onChangeText={setPassword}

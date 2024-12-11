@@ -99,14 +99,14 @@ export default function GoalsScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
-        placeholderTextColor="#808080"
+        placeholderTextColor="white"
         value={goalName}
         onChangeText={setGoalName}
       />
       <TextInput
         style={styles.input}
         placeholder="Goal Amount"
-        placeholderTextColor="#808080"
+        placeholderTextColor="white"
         value={goalAmount}
         onChangeText={setGoalAmount}
         keyboardType="numeric"
@@ -133,7 +133,7 @@ export default function GoalsScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Goal Deadline (MM/DD/YYYY)"
-        placeholderTextColor="#808080"
+        placeholderTextColor="white"
         value={goalDeadline}
         onChangeText={setGoalDeadline}
       />
@@ -262,14 +262,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   input: {
-    backgroundColor: '#ffffff',
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: 'black',
+    color: 'white',
     marginBottom: 15,
   },
   continueButton: {
