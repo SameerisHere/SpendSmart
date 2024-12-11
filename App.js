@@ -6,14 +6,15 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import HomeScreen from './HomeScreen';
 import GoalScreen from './GoalScreen';
 import ProfileScreen from './ProfileScreen';
-import BudgetScreen from './BudgetScreen';
+import BudgetScreen from './BudgetScreen'; 
 
-// Set screen orientation to portrait
+  
+// Set screen orientation to portrait 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-
+ 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App() { 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">

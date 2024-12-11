@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { WebView } from 'react-native-webview';  // Import WebView
+import { Video } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen({ navigation }) {
@@ -111,11 +111,14 @@ export default function ProfileScreen({ navigation }) {
     <View style={styles.lessonContainer}>
       <Text style={styles.lessonTitle}>{selectedLesson}</Text>
 
-      {/* WebView with YouTube video */}
-      <WebView
-        source={{ uri: 'https://youtu.be/XQ0f87stf_o?si=LVRVWFpBII2hWQce' }}
-        style={styles.videoPlayer}
-      />
+    {/* Video Player */}
+    <Video
+        source={{ uri: 'https://drive.google.com/uc?export=download&id=1nCl9hXUlIFuMaAhGgGlZdVJKVsoty4Cm' }}
+      style={styles.videoPlayer}
+      useNativeControls
+      resizeMode="contain"
+      shouldPlay
+    />
 
       <Text style={styles.quizQuestion}>What is the Most Common Type of Income Withholding?</Text>
 
@@ -169,48 +172,49 @@ function BottomNavbar({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#003333',
+    paddingBottom: 60,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
   },
   headerText: {
     fontSize: 24,
-    color: '#000',
+    color: '#f9fafa',
   },
   headerRight: {
     alignItems: 'flex-end',
   },
   headerRightText: {
-    color: '#000',
+    color: '#f9fafa',
   },
   lessonsContainer: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 40,
+    minWidth: "100%",
   },
   lessonCircle: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 300,
+    height: 100,
     backgroundColor: '#2276F0',
     justifyContent: 'center',
     alignItems: 'center',
   },
   inactiveLesson: {
-    backgroundColor: '#999999',
+    backgroundColor: '#d0d3d4',
   },
   activeLesson: {
-    backgroundColor: '#005e5e', // Active lesson color (blue-green)
+    backgroundColor: '#059d80', // Active lesson color (blue-green)
   },
   lessonText: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#fff',
+    color: '#white',
   },
   activeLessonText: {
     textAlign: 'center',
@@ -220,13 +224,13 @@ const styles = StyleSheet.create({
   lessonContainer: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#003333',
   },
   lessonTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
-    color: '#000000',
+    color: 'white',
   },
   videoPlayer: {
     height: 200,
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
   quizQuestion: {
     fontSize: 18,
     marginVertical: 20,
-    color: '#000000',
+    color: 'white',
   },
   quizOption: {
     padding: 15,
@@ -248,8 +252,11 @@ const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingVertical: 16,
     backgroundColor: '#000',
+    position: 'absolute', //fixed to the bottom
+    bottom: 0, //align with bottom of the screen
+    width: '100%', 
   },
   navText: {
     color: 'white',        // White text for visibility

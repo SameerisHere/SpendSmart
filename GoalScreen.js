@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function GoalsScreen() {
+export default function GoalsScreen({ navigation }) {
   const [view, setView] = useState('main'); // Tracks the current view (main, addGoalStep1, addGoalStep2)
   const [goalName, setGoalName] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
@@ -25,6 +25,11 @@ export default function GoalsScreen() {
   const validateStep1 = () => {
     if (!goalName.trim()) {
       Alert.alert('Validation Error', 'Please enter a name for your goal.');
+      return false;
+    }
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(goalName)) {
+      Alert.alert('Validation Error', 'Goal name can only contain letters and spaces.');
       return false;
     }
     if (!goalAmount || parseFloat(goalAmount) <= 0) {
@@ -94,12 +99,14 @@ export default function GoalsScreen() {
       <TextInput
         style={styles.input}
         placeholder="Goal Name"
+        placeholderTextColor="#808080"
         value={goalName}
         onChangeText={setGoalName}
       />
       <TextInput
         style={styles.input}
         placeholder="Goal Amount"
+        placeholderTextColor="#808080"
         value={goalAmount}
         onChangeText={setGoalAmount}
         keyboardType="numeric"
@@ -126,6 +133,7 @@ export default function GoalsScreen() {
       <TextInput
         style={styles.input}
         placeholder="Goal Deadline (MM/DD/YYYY)"
+        placeholderTextColor="#808080"
         value={goalDeadline}
         onChangeText={setGoalDeadline}
       />
@@ -148,21 +156,45 @@ export default function GoalsScreen() {
   );
 
   return (
-    view === 'main' ? renderMainView() :
-    view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()
+    <View style={styles.screenContainer}>
+      {view === 'main' ? renderMainView() :
+       view === 'addGoalStep1' ? renderAddGoalStep1() : renderAddGoalStep2()}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+          <Ionicons name="book-outline" size={24} color="white" />
+          <Text style={styles.navText}>Learn</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
+          <Ionicons name="cash-outline" size={24} color="white" />
+          <Text style={styles.navText}>Budget</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
+          <Ionicons name="stats-chart-outline" size={24} color="white" />
+          <Text style={styles.navText}>Goals</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
+          <Ionicons name="person-circle-outline" size={24} color="white" />
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
-
 const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    backgroundColor: '#003333',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
     padding: 10,
+    paddingBottom: 60,
+
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -210,7 +242,7 @@ const styles = StyleSheet.create({
   },
   tipsHeader: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -223,9 +255,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#white',
     padding: 10,
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 2,
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     fontSize: 12,
   },
@@ -268,7 +300,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   switchLabel: {
-    color: 'black',
+    color: 'white',
     fontSize: 14,
     flex: 1,
   },
@@ -302,16 +334,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    backgroundColor: 'black',
+    backgroundColor: '#000000',
     borderTopWidth: 1,
+    borderTopColor: '#444444',
+    paddingVertical: 16,
+    position: 'absolute', //fixed to the bottom
+    bottom: 0, //align with bottom of the screen
+    width: '100%', 
+  },
+  navItem: {
+    alignItems: 'center',
   },
   navText: {
     color: 'white',
-    fontSize: 12,          
-    marginTop: 5,          
-  },
-  navItem: {
-    alignItems: 'center',  
+    fontSize: 12,
+    marginTop: 5,
   },
   buttonContainer: {
     flexDirection: 'row',

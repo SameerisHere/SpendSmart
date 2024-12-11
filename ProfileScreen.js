@@ -30,7 +30,7 @@ const ProfileScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Email Address"
-        placeholderTextColor="#6C6C6C"
+        placeholderTextColor="#B3B3B3"
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
@@ -38,7 +38,7 @@ const ProfileScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        placeholderTextColor="#6C6C6C"
+        placeholderTextColor="#B3B3B3"
         secureTextEntry={true}
         value={password}
         onChangeText={setPassword}
@@ -49,24 +49,23 @@ const ProfileScreen = () => {
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>
 
-      {/* Logout Button */}
-      <TouchableOpacity style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>Logout</Text>
-      </TouchableOpacity>
-
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Ionicons name="home-outline" size={24} color="white" />
+     {/* Bottom Navigation */}
+     <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+          <Ionicons name="book-outline" size={24} color="white" />
+          <Text style={styles.navText}>Learn</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Budget')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Budget')} style={styles.navItem}>
           <Ionicons name="cash-outline" size={24} color="white" />
+          <Text style={styles.navText}>Budget</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Goals')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Goals')} style={styles.navItem}>
           <Ionicons name="stats-chart-outline" size={24} color="white" />
+          <Text style={styles.navText}>Goals</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.navItem}>
           <Ionicons name="person-circle-outline" size={24} color="white" />
+          <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -76,21 +75,22 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#003333',
     padding: 20,
     justifyContent: 'center',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     marginBottom: 20,
   },
   input: {
     backgroundColor: '#white',
     borderRadius: 10,
-    borderColor: 'black',
+    color: 'white',
+    borderColor: 'white',
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
@@ -114,9 +114,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logoutButtonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 1,
     paddingVertical: 8,
     paddingHorizontal: 30,
