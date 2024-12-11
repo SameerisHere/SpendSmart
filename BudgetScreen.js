@@ -296,8 +296,6 @@ export default function BudgetScreen({ navigation }) {
 
   const renderSpendingHabits = () => (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.header}>BUDGET</Text>
-  
       <View style={[styles.section, styles.centeredSection]}>
         <Text style={styles.subheader}>MONTHLY INCOME POST-TAX:</Text>
         <Text style={styles.whiteText}>${income}</Text>
@@ -334,7 +332,7 @@ export default function BudgetScreen({ navigation }) {
           <Text style={styles.buttonText}>Create New Budget</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.continueButton} onPress={generatePDF}>
-          <Text style={styles.buttonText}>Download PDF</Text>
+          <Text style={styles.buttonText}>Generate PDF of Your Budget</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(0)}>
           <Text style={styles.buttonText}>Back to All Budgets</Text>
@@ -354,6 +352,9 @@ const renderRecommendations = () => (
   <TextInput style={styles.input} placeholder="Other" placeholderTextColor="white" keyboardType="numeric" onChangeText={setOtherSpending} />
   <TouchableOpacity style={styles.continueButton} onPress={() => setStep(4)}>
     <Text style={styles.buttonText}>Finish Simulation</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.smallerContinueButton} onPress={() => setStep(4)}>
+          <Text style={styles.buttonText}>Back</Text>
   </TouchableOpacity>
 </View>
 );
@@ -609,7 +610,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
   },
   buttonContainer: {
-    marginTop: 10, //reduced top spacing
     paddingHorizontal: 20, //padding
     paddingBottom: 20, //padding
   },
