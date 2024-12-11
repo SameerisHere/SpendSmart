@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { WebView } from 'react-native-webview';  // Import WebView
+import { Video } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen({ navigation }) {
@@ -111,11 +111,14 @@ export default function ProfileScreen({ navigation }) {
     <View style={styles.lessonContainer}>
       <Text style={styles.lessonTitle}>{selectedLesson}</Text>
 
-      {/* WebView with YouTube video */}
-      <WebView
-        source={{ uri: 'https://youtu.be/XQ0f87stf_o?si=LVRVWFpBII2hWQce' }}
-        style={styles.videoPlayer}
-      />
+    {/* Video Player */}
+    <Video
+        source={{ uri: 'https://drive.google.com/uc?export=download&id=1nCl9hXUlIFuMaAhGgGlZdVJKVsoty4Cm' }}
+      style={styles.videoPlayer}
+      useNativeControls
+      resizeMode="contain"
+      shouldPlay
+    />
 
       <Text style={styles.quizQuestion}>What is the Most Common Type of Income Withholding?</Text>
 
