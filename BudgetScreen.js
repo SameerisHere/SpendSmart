@@ -408,13 +408,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    paddingBottom: 60,
+    paddingBottom: 100,
 
   },
   scrollContainer: {
     flexGrow: 1, //scrollable content
     paddingHorizontal: 20, //horizontal padding
-    paddingBottom: 30, //padding
+    paddingBottom: 100, //padding
     backgroundColor: '#003333', 
   },
   whiteText: {
