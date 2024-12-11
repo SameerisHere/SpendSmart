@@ -160,9 +160,14 @@ export default function BudgetScreen({ navigation }) {
         value={savings}
         onChangeText={setSavings}
       />
-      <TouchableOpacity style={styles.continueButton} onPress={handleStep1Continue}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.backButton} onPress={() => setStep(0)}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.continueAndBackButton} onPress={handleStep1Continue}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
   
