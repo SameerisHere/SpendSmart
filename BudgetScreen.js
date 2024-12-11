@@ -298,8 +298,8 @@ export default function BudgetScreen({ navigation }) {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.header}>BUDGET</Text>
   
-      <View style={styles.section}>
-        <Text style={styles.whiteText}>MONTHLY INCOME POST-TAX:</Text>
+      <View style={[styles.section, styles.centeredSection]}>
+        <Text style={styles.subheader}>MONTHLY INCOME POST-TAX:</Text>
         <Text style={styles.whiteText}>${income}</Text>
         <Text style={styles.whiteText}>SAVED: ${savings}</Text>
         <Text style={styles.whiteText}>
